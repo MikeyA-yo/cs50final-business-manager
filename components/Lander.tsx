@@ -9,7 +9,7 @@ export default function Lander() {
       <div className="bg-[#071952]   before:-bottom-7 before:rounded-[50%] h-screen flex items-center justify-center lg:flex-row md:flex-row flex-col">
         <div className={`text-[#EBF4F6] text-center ${oswald.className} px-10`}>
           <h1 className={`text-4xl py-4 ${mont.className}`}>
-            Business Manager
+            Streamline Your Finances
           </h1>
           <p className={`py-4 ${ubuntu.className}`}>
             Simplify your business operations with our intuitive platform.
