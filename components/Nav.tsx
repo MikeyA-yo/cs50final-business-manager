@@ -1,6 +1,7 @@
 "use client";
 import { Ubuntu } from "next/font/google";
 import Link from "next/link";
+import {Link as Scroll} from "react-scroll"
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -96,7 +97,7 @@ function MenuList() {
               <Link href={"/"}>Home</Link>
             </li>
             <li>
-              <Link href={"#about"}>About</Link>
+              <Scroll to={"about"} smooth duration={250}>About</Scroll>
             </li>
             <li>
               <Link href={"/login"}>Login</Link>
@@ -121,7 +122,7 @@ export default function Nav() {
           </div>
           <div className="lg:flex gap-8 md:flex hidden">
             <Link href={"/"}>Home</Link>
-            <Link href={"#about"}>About</Link>
+            <Scroll to={"about"} smooth duration={250}>About</Scroll>
             <Link href={"/login"}>Login</Link>
           </div>
           <div className="flex lg:hidden md:hidden">

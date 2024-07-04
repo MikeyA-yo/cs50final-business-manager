@@ -49,7 +49,7 @@ function ChooseUs({
 export default function Why() {
   return (
     <>
-      <div className="flex flex-col gap-3 items-center justify-center pt-10">
+      <div className="flex flex-col gap-3 items-center justify-center py-14">
         <h2 className={`text-2xl ${inter.className}`}>
           Why Choose <span className="text-[#088395]">Us</span>
         </h2>
