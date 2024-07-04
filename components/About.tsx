@@ -11,7 +11,7 @@ export default function About() {
           <h2 className="text-3xl">
             About <span className="text-[#088395]">Us</span>
           </h2>
-          <p className={`${ubuntu.className} text-xl`}>
+          <p className={`${ubuntu.className} lg:text-xl `}>
             {" "}
             Empowering Businesses with Simple, Effective Financial Management
             Solutions.
@@ -27,7 +27,7 @@ export default function About() {
               width={350}
             />
           </div>
-          <div className={mont.className}>
+          <div className={`${mont.className} text-sm lg:text-base md:text-base`}>
             Welcome to Business Manager, where we make financial management easy
             and efficient for businesses of all sizes.<br /> Our mission is to empower
             business owners and managers with tools to track profits and losses,
