@@ -2,7 +2,9 @@ import { Lucia } from "lucia";
 import { MongodbAdapter } from "@lucia-auth/adapter-mongodb";
 import { clientPromise } from "../mongodb";
 import { Collection } from "mongodb";
+import { Google } from "arctic";
 
+const google = new Google(process.env.GOOGLE_CLIENTID as string, process.env.GOOGLE_CLIENTSECRET as string, "/api/auth/callback")
 const client  = await clientPromise
 const db = client.db("BusinessManager")
 const User = db.collection("users") as Collection<UserDoc>;
@@ -19,25 +21,44 @@ export const lucia = new Lucia(adapter, {
 			// set to `true` when using HTTPS
 			secure: process.env.NODE_ENV === "production"
 		}
-	}
+	},
+    getUserAttributes: (data) => {
+        return data
+    },
+    getSessionAttributes: (data) => {
+        return data
+    }
+    // getUserAttributes: (attributes) => {
+    //     return {
+    //         name: attributes.name,
+    //         email:attributes.email
+    //     };
+    // }
 });
 
 // IMPORTANT!
 declare module "lucia" {
 	interface Register {
 		Lucia: typeof lucia;
-        // DatabaseUserAttributes:DatabaseUserAttributes
+       DatabaseUserAttributes:DatabaseUserAttributes;
+       DatabaseSessionAttributes:DatabaseSessionAttributes
 	}
 }
 
 interface UserDoc {
 	_id: string,
+    name:string
 }
-// interface DatabaseUserAttributes{
-//     _id:string,
-//   name:string,
-//   email:string
-// }
+interface DatabaseUserAttributes{
+  _id:string,
+  name:string
+}
+
+interface DatabaseSessionAttributes{
+    _id: string;
+	expires_at: Date;
+	user_id: string;
+}
 interface SessionDoc {
 	_id: string;
 	expires_at: Date;
