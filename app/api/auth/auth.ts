@@ -7,7 +7,7 @@ import { Google } from "arctic";
 export const google = new Google(
   process.env.GOOGLE_CLIENTID as string,
   process.env.GOOGLE_CLIENTSECRET as string,
-  "/api/auth/callback"
+  "http://localhost:3000/api/auth/callback"
 );
 const client = await clientPromise;
 const db = client.db("BusinessManager");
