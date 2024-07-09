@@ -40,8 +40,7 @@ export const auth =
     async (): Promise<
         { user: User; session: Session } | { user: null; session: null }
     > => {
-        const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
-        console.log(cookies().getAll())
+        const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
         if (!sessionId) {
             return {
                 user: null,
@@ -49,7 +48,6 @@ export const auth =
             }
         }
         const result = await lucia.validateSession(sessionId)
-        console.log(result)
         try {
             if (result.session?.fresh) {
                 const sessionCookie = lucia.createSessionCookie(result.session.id)
