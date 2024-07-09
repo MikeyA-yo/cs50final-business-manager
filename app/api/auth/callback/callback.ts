@@ -40,6 +40,7 @@ export async function callback(req: Request) {
     if (userId) {
       const session = await lucia.createSession(userId._id, {});
       const sesssionCookie = lucia.createSessionCookie(session.id);
+      console.log(sesssionCookie)
       cookies().set(
         sesssionCookie.name,
         sesssionCookie.value,
@@ -55,7 +56,7 @@ export async function callback(req: Request) {
     }
     const newUser = await users.insertOne({email:user.email, name:user.name,image:user.picture});
     const session = await lucia.createSession(newUser.insertedId, {});
-      const sesssionCookie = lucia.createSessionCookie(session.id);
+    const sesssionCookie = lucia.createSessionCookie(session.id);
       cookies().set(
         sesssionCookie.name,
         sesssionCookie.value,
@@ -71,7 +72,19 @@ export async function callback(req: Request) {
     if (e instanceof OAuth2RequestError) {
       const { request, message, description } = e;
       console.log(request, message, description);
+      return new Response(null, {
+        status: 400,
+        headers: {
+          Location: "/",
+        },
+      });
     }
+    return new Response(null, {
+        status: 400,
+        headers: {
+          Location: "/",
+        },
+      });
     // unknown error
   }
 }

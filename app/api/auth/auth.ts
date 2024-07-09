@@ -41,6 +41,7 @@ export const auth =
         { user: User; session: Session } | { user: null; session: null }
     > => {
         const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
+        console.log(cookies().getAll())
         if (!sessionId) {
             return {
                 user: null,
