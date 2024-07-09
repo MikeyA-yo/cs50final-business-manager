@@ -40,7 +40,7 @@ export async function callback(req: Request) {
     if (userId) {
       const session = await lucia.createSession(userId._id, {});
       const sesssionCookie = lucia.createSessionCookie(session.id);
-      console.log(sesssionCookie)
+      console.log(sesssionCookie.name, session)
       cookies().set(
         sesssionCookie.name,
         sesssionCookie.value,
