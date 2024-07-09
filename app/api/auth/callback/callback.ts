@@ -38,13 +38,14 @@ export async function callback(req: Request) {
     const user: User = await response.json();
     const userId = await users.findOne({ email: user.email });
     if (userId) {
-      const session = await lucia.createSession(userId._id.toString(), {});
+      const session = await lucia.createSession(userId._id, {});
       const sesssionCookie = lucia.createSessionCookie(session.id);
       cookies().set(
         sesssionCookie.name,
         sesssionCookie.value,
         sesssionCookie.attributes
       );
+      
       return new Response(null, {
         status: 302,
         headers: {
@@ -53,7 +54,7 @@ export async function callback(req: Request) {
       });
     }
     const newUser = await users.insertOne({email:user.email, name:user.name,image:user.picture});
-    const session = await lucia.createSession(newUser.insertedId.toString(), {});
+    const session = await lucia.createSession(newUser.insertedId, {});
       const sesssionCookie = lucia.createSessionCookie(session.id);
       cookies().set(
         sesssionCookie.name,
