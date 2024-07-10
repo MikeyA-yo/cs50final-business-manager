@@ -122,7 +122,7 @@ export default function Nav() {
           </div>
           <div className="lg:flex gap-8 md:flex hidden">
             <Link href={"/"}>Home</Link>
-            <Scroll to={"about"} smooth duration={250}>About</Scroll>
+            <Scroll to={"about"} className="cursor-pointer" smooth duration={450}>About</Scroll>
             <Link href={"/login"}>Login</Link>
           </div>
           <div className="flex lg:hidden md:hidden">

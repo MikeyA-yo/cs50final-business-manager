@@ -1,6 +1,6 @@
-import { createUser } from "./functions"
+import {  Login } from "./functions"
 
 export async function GET(req:Request){
-   const {email, username, password} = await req.json()
-   return (await createUser(email, username, password))
+   const {email, password} = await req.json()
+   return (await Login(email,  password))
 }

@@ -9,7 +9,6 @@ import Email from "./email";
 const inter = Inter({weight:["500"], subsets:["vietnamese"]})
 export default async function Login(){
     const {user} = await auth()
-    console.log(user == null, user)
  return (
     <>
       <div className={`flex bg-[#071952] items-center justify-center min-h-[100svh] ${inter.className}`}>
