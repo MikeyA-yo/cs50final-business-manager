@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { google, lucia } from "../auth";
+import { google } from "../auth";
 import { generateState, generateCodeVerifier } from "arctic";
 export async function SignInGoogle(){
     const state = generateState();
