@@ -4,6 +4,7 @@ import Link from "next/link";
 import {Link as Scroll} from "react-scroll"
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 const ubuntu = Ubuntu({ weight: ["500"], subsets: ["latin"] });
 
@@ -111,9 +112,14 @@ function MenuList() {
 
 export default function Nav() {
   const [open, setOpen] = useState<boolean>(false);
+  const pathname = usePathname();
+  let hidden = "flex";
+  if(pathname == "/login"){
+    hidden = "hidden";
+  }
   return (
     <>
-      <div className="flex bg-[#071952] p-8 gap-2 text-[#EBF4F6] flex-col">
+      <div className={`${hidden} bg-[#071952] p-8 gap-2 text-[#EBF4F6] flex-col`}>
         <nav
           className={`flex items-center justify-between lg:flex-row md:flex-row ${ubuntu.className}`}
         >
@@ -128,7 +134,7 @@ export default function Nav() {
           <div className="flex lg:hidden md:hidden">
             {!open && (
               <Bar
-                onClick={(e) => {
+                onClick={() => {
                   setOpen(true);
                 }}
               />
@@ -142,7 +148,7 @@ export default function Nav() {
             )}
           </div>
         </nav>
-        {open && <MenuList />}
+        {open && <div onClick={()=>setOpen(false)}><MenuList /></div>}
       </div>
     </>
   );
