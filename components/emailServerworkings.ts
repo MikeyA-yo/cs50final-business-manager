@@ -67,28 +67,36 @@ export async function CreateAccountv2(
 
   if (name && lastName && email && password) {
     const username = `${name} ${lastName}`;
-    const res = await fetch(
-      "http://localhost:3000/api/auth/login/email/create",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
-      }
-    );
-
-    if (res.status === 302) {
-      redirect("/");
+    const cookie = cookies();
+    const client = await clientPromise;
+    const db = client.db("BusinessManager");
+    const users = db.collection("users");
+    if(!isValidEmail(email as string)){
+        return {
+          message:"Invalid Email"
+        }
     }
-
-    if (res.status === 400) {
-      const text = await res.text();
-      return {
-        message: text,
-      };
+    const existingUser = await users.findOne({email})
+    if(existingUser){
+        return {
+          message:"User already exists"
+        }
     }
+    const hashedPassword = await bcrypt.hash(password as string,10);
+    const userObject = {
+        email,
+        name,
+        image:"",
+        hashedPassword
+    }
+   const result =  await users.insertOne(userObject);
+   const session = await lucia.createSession(result.insertedId, {});
+   const sessionCookie = lucia.createSessionCookie(session.id);
+   cookie.set(
+    sessionCookie.name, 
+    sessionCookie.value, 
+    sessionCookie.attributes
+);
   } else if (email && password) {
     const cookie = cookies();
     const client = await clientPromise;
