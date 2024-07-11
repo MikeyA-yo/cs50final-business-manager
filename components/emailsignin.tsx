@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Email from "./email";
+import { CreateAccount } from "./emailServerworkings";
 
 export default function EmailSignIn() {
   const [openForm, setOpenForm] = useState(false);
@@ -13,16 +14,16 @@ export default function EmailSignIn() {
       >
         <Email className="h-8 w-8" /> <span>Sign in With Email</span>
       </div>
-      {openForm && <Form />}
+      {openForm && <Form action={CreateAccount} />}
     </div>
   );
 }
 
-function Form() {
+function Form({ action }: { action: (formData: FormData) => any }) {
   return (
     <>
       <div>
-        <form>
+        <form action={action} onSubmit={(e) => e.preventDefault()}>
           <div className="flex w-full flex-col gap-2 justify-center items-center">
             <div className="flex w-full lg:px-3 lg:flex-row flex-col items-center gap-2 justify-center">
               <div className="flex flex-col">
@@ -88,6 +89,14 @@ function Form() {
                   </svg>
                 </span>
               </div>
+            </div>
+            <div>
+              <button
+                type="submit"
+                className="bg-[#071952] bg-opacity-50 m-2 p-2 rounded-lg"
+              >
+                Create Account
+              </button>
             </div>
           </div>
         </form>
