@@ -1,8 +1,9 @@
 "use client";
 
+import { useFormState } from "react-dom"
 import { useState } from "react";
 import Email from "./email";
-import { CreateAccount } from "./emailServerworkings";
+import { CreateAccount, CreateAccountv2 } from "./emailServerworkings";
 
 export default function EmailSignIn() {
   const [openForm, setOpenForm] = useState(false);
@@ -42,6 +43,7 @@ export default function EmailSignIn() {
 }
 
 function Form() {
+  const [state, formAction] = useFormState(CreateAccountv2, { message: "" })
   const [showP, setShowP] = useState("password");
   const [data, setData] = useState<formdata>({
     firstName: "",
@@ -56,14 +58,15 @@ function Form() {
       [name]: value,
     }));
   };
+  // onSubmit={(e) => {
+  //   e.preventDefault();
+  //    CreateAccount(data);
+  //  }}
   return (
     <>
       <div>
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            CreateAccount(data);
-          }}
+          action={formAction}
         >
           <div className="flex w-full flex-col gap-2 justify-center items-center">
             <div className="flex w-full lg:px-3 lg:flex-row flex-col items-center gap-2 justify-center">
@@ -159,6 +162,7 @@ function Form() {
 }
 
 function LoginForm() {
+  const [state, formAction] = useFormState(CreateAccountv2, { message: "" })
   const [showP, setShowP] = useState("password");
   const [data, setData] = useState<formdata>({
     email: "",
@@ -171,14 +175,15 @@ function LoginForm() {
       [name]: value,
     }));
   };
+  // onSubmit={(e) => {
+  //   e.preventDefault();
+  //   CreateAccount(data);
+  // }}
   return (
     <>
       <div>
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            CreateAccount(data);
-          }}
+          action={formAction}
         >
           <div className="flex w-full flex-col gap-2 justify-center items-center">
             <div className="flex flex-col">

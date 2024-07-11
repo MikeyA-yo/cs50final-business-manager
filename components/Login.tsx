@@ -3,7 +3,6 @@ import GoogleSvg from "./google";
 import { Inter } from "next/font/google";
 import { auth } from "@/app/api/auth/auth";
 import Link from "next/link";
-import Email from "./email";
 import EmailSignIn from "./emailsignin";
 
 const inter = Inter({ weight: ["500"], subsets: ["vietnamese"] });

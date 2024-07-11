@@ -1,14 +1,17 @@
-"use server"
+
 import { clientPromise } from "@/app/api/mongodb";
 import bcrypt from "bcrypt"
 import { auth, lucia } from "../../auth";
 import { cookies } from "next/headers";
 
-function isValidEmail(email: string): boolean {
+
+
+export function isValidEmail(email: string): boolean {
 	return /.+@.+/.test(email);
 }
 
 export async function createUser(email:string, name:string, password:string){
+    const cookie = cookies();
     const client = await clientPromise;
     const db = client.db("BusinessManager");
     const users = db.collection("users");
@@ -43,7 +46,7 @@ export async function createUser(email:string, name:string, password:string){
    const result =  await users.insertOne(userObject);
    const session = await lucia.createSession(result.insertedId, {});
    const sessionCookie = lucia.createSessionCookie(session.id);
-   cookies().set(
+   cookie.set(
     sessionCookie.name, 
     sessionCookie.value, 
     sessionCookie.attributes
@@ -57,6 +60,7 @@ export async function createUser(email:string, name:string, password:string){
 }
 
 export async function Login(email:string, password:string){
+    const cookie = cookies();
     const client = await clientPromise;
     const db = client.db("BusinessManager");
     const users = db.collection("users");
@@ -96,7 +100,7 @@ export async function Login(email:string, password:string){
         const session = await lucia.createSession(existingUser._id, {});
         const sessionCookie = lucia.createSessionCookie(session.id);
         console.log(sessionCookie)
-        cookies().set(
+        cookie.set(
             sessionCookie.name, 
             sessionCookie.value, 
             sessionCookie.attributes
@@ -117,6 +121,7 @@ export async function Login(email:string, password:string){
 }
 
 export async function signOut(){
+    const cookie = cookies();
     const {session} = await auth()
     if(!session){
         return new Response(
@@ -131,7 +136,7 @@ export async function signOut(){
     await lucia.invalidateSession(session.id);
 
 	const sessionCookie = lucia.createBlankSessionCookie();
-	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+	cookie.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
     return new Response(null, {
         status: 302,
         headers: {
