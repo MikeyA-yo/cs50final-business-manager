@@ -1,6 +1,6 @@
 import { Lucia, Session, User } from "lucia";
 import { MongodbAdapter } from "@lucia-auth/adapter-mongodb";
-import { clientPromise } from "../mongodb";
+import { client as m, clientPromise } from "../mongodb";
 import { Collection, ObjectId } from "mongodb";
 import { Google } from "arctic";
 import { cookies } from "next/headers";
@@ -11,7 +11,11 @@ export const google = new Google(
   process.env.GOOGLE_CLIENTSECRET as string,
   "http://localhost:3000/api/auth/callback"
 );
-const client = await clientPromise;
+async function connect() {
+  await clientPromise;
+}
+connect()
+const client = m;
 const db = client.db("BusinessManager");
 const user = db.collection("users") as Collection<UserDoc>;
 const session = db.collection("sessions") as Collection<SessionDoc>;

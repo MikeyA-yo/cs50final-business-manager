@@ -57,7 +57,7 @@ export interface ActionResult {
   message: string | null;
 }
 export async function CreateAccountv2(
-  _: any,
+  _: unknown,
   data: FormData
 ): Promise<ActionResult> {
   const name = data.get("firstName");
