@@ -1,9 +1,10 @@
+"use server"
 import { clientPromise } from "@/app/api/mongodb";
 import bcrypt from "bcrypt"
 import { auth, lucia } from "../../auth";
 import { cookies } from "next/headers";
 
-export function isValidEmail(email: string): boolean {
+function isValidEmail(email: string): boolean {
 	return /.+@.+/.test(email);
 }
 
@@ -42,7 +43,11 @@ export async function createUser(email:string, name:string, password:string){
    const result =  await users.insertOne(userObject);
    const session = await lucia.createSession(result.insertedId, {});
    const sessionCookie = lucia.createSessionCookie(session.id);
-   cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+   cookies().set(
+    sessionCookie.name, 
+    sessionCookie.value, 
+    sessionCookie.attributes
+);
    return new Response(null, {
     status: 302,
     headers: {
@@ -90,7 +95,12 @@ export async function Login(email:string, password:string){
     if(check){
         const session = await lucia.createSession(existingUser._id, {});
         const sessionCookie = lucia.createSessionCookie(session.id);
-        cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+        console.log(sessionCookie)
+        cookies().set(
+            sessionCookie.name, 
+            sessionCookie.value, 
+            sessionCookie.attributes
+        );
         return new Response(null, {
             status: 302,
             headers: {

@@ -9,6 +9,7 @@ import EmailSignIn from "./emailsignin";
 const inter = Inter({ weight: ["500"], subsets: ["vietnamese"] });
 export default async function Login() {
   const { user } = await auth();
+  console.log(user)
   return (
     <>
       <div
