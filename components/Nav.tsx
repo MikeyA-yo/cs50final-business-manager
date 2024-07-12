@@ -114,7 +114,7 @@ export default function Nav() {
   const [open, setOpen] = useState<boolean>(false);
   const pathname = usePathname();
   let hidden = "flex";
-  if(pathname == "/login" || pathname.includes("/error")){
+  if(pathname === "/login" || pathname.includes("/error") || pathname === "/register"){
     hidden = "hidden";
   }
   return (

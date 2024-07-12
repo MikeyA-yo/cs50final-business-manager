@@ -1,4 +1,5 @@
 import { Montserrat, Oswald, Ubuntu } from "next/font/google";
+import Link from "next/link";
 
 const mont = Montserrat({ weight: ["600"], subsets: ["vietnamese"] });
 const oswald = Oswald({ weight: ["600"], subsets: ["vietnamese"] });
@@ -17,7 +18,7 @@ export default function Lander() {
             earnings with ease. Stay on top of your financial game with our
             comprehensive monitoring tools
           </p>
-          <button className="bg-[#37B7C3] py-2 px-4"> Get Started</button>
+          <button className="bg-[#37B7C3] py-2 px-4"><Link href={`/login`}> Get Started</Link></button>
         </div>
       </div>
     </>

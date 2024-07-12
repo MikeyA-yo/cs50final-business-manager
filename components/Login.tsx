@@ -4,11 +4,15 @@ import { Inter } from "next/font/google";
 import { auth } from "@/app/api/auth/auth";
 import Link from "next/link";
 import EmailSignIn from "./emailsignin";
+import { redirect } from "next/navigation";
 
 const inter = Inter({ weight: ["500"], subsets: ["vietnamese"] });
 export default async function Login() {
   const { user } = await auth();
   console.log(user)
+  if(user){
+    redirect("/")
+  }
   return (
     <>
       <div

@@ -16,6 +16,7 @@
     "lucia": "^3.2.0",
     "mongodb": "^6.8.0",
     "next": "^14.2.5",
+    "nodemailer": "^6.9.14",
     "oslo": "^1.2.1",
     "react": "^18",
     "react-dom": "^18",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.15",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-scroll": "^1.8.10",
