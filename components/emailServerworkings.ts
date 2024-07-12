@@ -85,7 +85,7 @@ export async function CreateAccountv2(
     const hashedPassword = await bcrypt.hash(password as string,10);
     const userObject = {
         email,
-        name,
+        name:username,
         image:"",
         hashedPassword
     }

@@ -44,7 +44,6 @@ export const auth = cache(
   async (): Promise<
     { user: User; session: Session } | { user: null; session: null }
   > => {
-    console.log(cookies().getAll())
     const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
     if (!sessionId) {
       return {

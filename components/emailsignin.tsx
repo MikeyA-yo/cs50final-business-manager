@@ -4,6 +4,7 @@ import { useFormState } from "react-dom"
 import { useState } from "react";
 import Email from "./email";
 import { CreateAccount, CreateAccountv2 } from "./emailServerworkings";
+import { redirect } from "next/navigation";
 
 export default function EmailSignIn() {
   const [openForm, setOpenForm] = useState(false);
@@ -175,6 +176,9 @@ function LoginForm() {
       [name]: value,
     }));
   };
+ if (state.message && state.message.length > 4){
+    return redirect(`/error/${state.message}`)
+ }
   // onSubmit={(e) => {
   //   e.preventDefault();
   //   CreateAccount(data);
