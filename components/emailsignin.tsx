@@ -3,7 +3,7 @@
 import { useFormState } from "react-dom"
 import { useState } from "react";
 import Email from "./email";
-import { CreateAccount, CreateAccountv2 } from "./emailServerworkings";
+import { CreateAccountv2 } from "./emailServerworkings";
 import { redirect } from "next/navigation";
 
 export default function EmailSignIn() {
@@ -46,23 +46,22 @@ export default function EmailSignIn() {
 function Form() {
   const [state, formAction] = useFormState(CreateAccountv2, { message: "" })
   const [showP, setShowP] = useState("password");
-  const [data, setData] = useState<formdata>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-  // onSubmit={(e) => {
-  //   e.preventDefault();
-  //    CreateAccount(data);
-  //  }}
+  if (state.message && state.message.length > 4){
+    return redirect(`/error/${state.message}`)
+ }
+  // const [data, setData] = useState<formdata>({
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   password: "",
+  // });
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
   return (
     <>
       <div>
@@ -78,7 +77,6 @@ function Form() {
                   name="firstName"
                   required
                   type="text"
-                  onChange={handleChange}
                   className="w-44 h-6 rounded  p-1 focus:border-[#071952] outline-none border-[#EBF4F6] border placeholder:text-[#EBF4F6] bg-inherit"
                 />
               </div>
@@ -89,7 +87,6 @@ function Form() {
                   name="lastName"
                   required
                   type="text"
-                  onChange={handleChange}
                   className="w-44 h-6 rounded  focus:border-[#071952] p-1 outline-none border-[#EBF4F6] placeholder:text-[#EBF4F6] border bg-inherit"
                 />
               </div>
@@ -101,7 +98,6 @@ function Form() {
                 name="email"
                 required
                 type="text"
-                onChange={handleChange}
                 className="w-44 h-6 rounded  focus:border-[#071952] p-1 outline-none border-[#EBF4F6] placeholder:text-[#EBF4F6] border bg-inherit"
               />
             </div>
@@ -113,7 +109,6 @@ function Form() {
                   required
                   name="password"
                   type={showP}
-                  onChange={handleChange}
                   className="w-44 border  p-1 focus:border-[#071952] rounded outline-none placeholder:text-[#EBF4F6] border-[#EBF4F6] h-6 bg-inherit"
                 />
                 <span
@@ -165,24 +160,20 @@ function Form() {
 function LoginForm() {
   const [state, formAction] = useFormState(CreateAccountv2, { message: "" })
   const [showP, setShowP] = useState("password");
-  const [data, setData] = useState<formdata>({
-    email: "",
-    password: "",
-  });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  // const [data, setData] = useState<formdata>({
+  //   email: "",
+  //   password: "",
+  // });
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
  if (state.message && state.message.length > 4){
     return redirect(`/error/${state.message}`)
  }
-  // onSubmit={(e) => {
-  //   e.preventDefault();
-  //   CreateAccount(data);
-  // }}
   return (
     <>
       <div>
@@ -197,7 +188,6 @@ function LoginForm() {
                 name="email"
                 required
                 type="text"
-                onChange={handleChange}
                 className="w-44 h-6 rounded  focus:border-[#071952] p-1 outline-none border-[#EBF4F6] placeholder:text-[#EBF4F6] border bg-inherit"
               />
             </div>
@@ -209,7 +199,6 @@ function LoginForm() {
                   required
                   name="password"
                   type={showP}
-                  onChange={handleChange}
                   className="w-44 border  p-1 focus:border-[#071952] rounded outline-none placeholder:text-[#EBF4F6] border-[#EBF4F6] h-6 bg-inherit"
                 />
                 <span
