@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   const mailOpt: Mail.Options = {
     from: process.env.GMAIL,
     to: email,
-    subject: "Reset PassWord",
+    subject: "Reset Password",
     html: `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
     <body>
         <div class="container">
             <div class="header">
-                <h1>Password Reset Password</h1>
+                <h1>Password Reset</h1>
             </div>
             <div class="content">
                 <p>Dear ${name},</p>

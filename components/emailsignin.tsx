@@ -5,6 +5,7 @@ import { useState } from "react";
 import Email from "./email";
 import { CreateAccountv2 } from "./emailServerworkings";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default function EmailSignIn() {
   const [openForm, setOpenForm] = useState(false);
@@ -242,6 +243,7 @@ function LoginForm() {
             </div>
           </div>
         </form>
+        <p>Forgot password? </p>
       </div>
     </>
   );
