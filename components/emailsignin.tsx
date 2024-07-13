@@ -243,15 +243,8 @@ function LoginForm() {
             </div>
           </div>
         </form>
-        <p>Forgot password? </p>
+        <p className="flex items-center justify-center"><Link href={`/reset-password`} >Forgot password? </Link></p>
       </div>
     </>
   );
-}
-
-export interface formdata {
-  firstName?: string;
-  lastName?: string;
-  email: string;
-  password: string;
 }
