@@ -5,6 +5,7 @@ import {Link as Scroll} from "react-scroll"
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { User } from "lucia";
 
 const ubuntu = Ubuntu({ weight: ["500"], subsets: ["latin"] });
 
@@ -76,7 +77,7 @@ function Xbar({
   );
 }
 
-function MenuList() {
+function MenuList({user}:{user?:User | null | userPreview}) {
   return (
     <>
       <AnimatePresence>
@@ -101,7 +102,7 @@ function MenuList() {
               <Scroll to={"about"} smooth duration={250}>About</Scroll>
             </li>
             <li>
-              <Link href={"/login"}>Login</Link>
+              <Link href={user ? "/dashboard":"/login"}>{user ? "Dashboard":"Login"}</Link>
             </li>
           </ul>
         </motion.div>
@@ -109,8 +110,8 @@ function MenuList() {
     </>
   );
 }
-
-export default function Nav() {
+export type userPreview = Omit<User, "_id" | "id">
+export default function Nav({user}:{user?:User | null | userPreview}) {
   const [open, setOpen] = useState<boolean>(false);
   const pathname = usePathname();
   let hidden = "flex";
@@ -129,7 +130,7 @@ export default function Nav() {
           <div className="lg:flex gap-8 md:flex hidden">
             <Link href={"/"}>Home</Link>
             <Scroll to={"about"} className="cursor-pointer" smooth duration={450}>About</Scroll>
-            <Link href={"/login"}>Login</Link>
+            <Link href={user ? "/dashboard":"/login"}>{user ? "Dashboard":"Login"}</Link>
           </div>
           <div className="flex lg:hidden md:hidden">
             {!open && (
@@ -148,7 +149,7 @@ export default function Nav() {
             )}
           </div>
         </nav>
-        {open && <div onClick={()=>setOpen(false)}><MenuList /></div>}
+        {open && <div onClick={()=>setOpen(false)}><MenuList user={user} /></div>}
       </div>
     </>
   );
