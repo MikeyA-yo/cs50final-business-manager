@@ -21,16 +21,18 @@ export default function Register() {
               profitability with our streamlined financial management tools.
               <br /> Reduce administrative burdens and focus on what matters
               most.
+              
             </p>
           </div>
           <div className="bg-[#37B7C3] p-4 rounded">
             <p>Get Started</p>
             <p>
               Join our community of business owners who trust Business Manager
-              <br /> for efficient profit and loss tracking.<br /> Sign up and unlock
+              <br /> for efficient profit and loss tracking.<br />Register and unlock
               powerful financial insights.
             </p>
           </div>
+          <p> You can always edit any of this settings.</p>
         </div>
         <div className="w-full">
           <div className="w-full flex flex-col items-center justify-center">
@@ -52,8 +54,11 @@ export default function Register() {
                 </select>
               </div>
               <div className="flex flex-col p-4 gap-2">
-                 <label htmlFor="Infrastructure">Infrastructure Type:</label>
-                 <input className="bg-[#EBF4F6] w-60 rounded-lg p-4" />
+                 <label htmlFor="Infrastructure">Primary Infrastructure Type:</label>
+                 <select className="bg-[#EBF4F6] w-60 rounded-lg p-4">
+                    <option value={`physical`}>Physical</option>
+                    <option value={`technology`}>Technology</option>
+                 </select>
               </div>
             </form>
           </div>
