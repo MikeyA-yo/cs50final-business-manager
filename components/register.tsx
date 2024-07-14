@@ -45,6 +45,7 @@ export default function Register() {
                   className="bg-[#EBF4F6] w-60 rounded-lg p-4"
                   autoComplete="off"
                   type="text"
+                  placeholder="Your Business Name"
                 />
               </div>
               <div className="flex flex-col p-4 gap-2">
@@ -63,7 +64,15 @@ export default function Register() {
               </div>
               <div className="flex flex-col p-4 gap-2">
                 <label htmlFor="motive">Profit Motive</label>
-                <input type="text" name="motive" className="bg-[#EBF4F6] w-60 rounded-lg p-4" />
+                <input type="text" name="motive" placeholder="What is your simple business profit motive?" className="bg-[#EBF4F6] w-60 rounded-lg p-4" />
+              </div>
+              <div className="flex flex-col p-4 gap-2">
+                <label htmlFor="role">Role? (employer or employee)</label>
+                <select className="bg-[#EBF4F6] w-60 rounded-lg p-4">
+                    <option value={`employer`}>Business Owner (Employer)</option>
+                    <option value={`employee`}>Worker (Employee)</option>
+                    <option value={`freelancer`}>Freelancer</option>
+                 </select>
               </div>
             </form>
           </div>
