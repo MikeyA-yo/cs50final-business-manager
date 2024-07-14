@@ -1,8 +1,34 @@
 "use client";
 import { Open_Sans } from "next/font/google";
+import { useState } from "react";
 
 const open = Open_Sans({ weight: ["600"], subsets: ["hebrew"] });
-export default function Register() {
+function RegisterBusiness({name, currency, profitMotive, infrastructure, role, userId}:{name:string, currency:string, profitMotive:string, infrastructure:string, role:string, userId:string}){
+
+}
+export default function Register({userId}:{userId?:string}) {
+  
+   const [data, setData] = useState<formdata>({
+    businessName:"",
+    motive:"",
+    infrastructure:"physical",
+    currency:"naira",
+    role:"employer",
+  });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
   return (
     <>
       <div
@@ -46,29 +72,30 @@ export default function Register() {
                   autoComplete="off"
                   type="text"
                   placeholder="Your Business Name"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex flex-col p-4 gap-2">
                 <label htmlFor="currency">Currency: </label>
-                <select name="currency" className="bg-[#EBF4F6] w-60 rounded-lg p-4">
+                <select onChange={handleSelectChange} name="currency" className="bg-[#EBF4F6] w-60 rounded-lg p-4">
                   <option value={`naira`}>Naira </option>
                   <option value={`dollars`}>Dollars </option>
                 </select>
               </div>
               <div className="flex flex-col p-4 gap-2">
-                 <label htmlFor="Infrastructure">Primary Infrastructure Type:</label>
-                 <select className="bg-[#EBF4F6] w-60 rounded-lg p-4">
+                 <label htmlFor="infrastructure">Primary Infrastructure Type:</label>
+                 <select name="infrastructure" onChange={handleSelectChange} className="bg-[#EBF4F6] w-60 rounded-lg p-4">
                     <option value={`physical`}>Physical</option>
                     <option value={`technology`}>Technology</option>
                  </select>
               </div>
               <div className="flex flex-col p-4 gap-2">
                 <label htmlFor="motive">Profit Motive</label>
-                <input type="text" name="motive" placeholder="What is your simple business profit motive?" className="bg-[#EBF4F6] w-60 rounded-lg p-4" />
+                <input onChange={handleChange} type="text" name="motive" placeholder="What is your simple business profit motive?" className="bg-[#EBF4F6] w-60 rounded-lg p-4" />
               </div>
               <div className="flex flex-col p-4 gap-2">
                 <label htmlFor="role">Role? (employer or employee)</label>
-                <select className="bg-[#EBF4F6] w-60 rounded-lg p-4">
+                <select name="role" onChange={handleSelectChange} className="bg-[#EBF4F6] w-60 rounded-lg p-4">
                     <option value={`employer`}>Business Owner (Employer)</option>
                     <option value={`employee`}>Worker (Employee)</option>
                     <option value={`freelancer`}>Freelancer</option>
@@ -80,4 +107,12 @@ export default function Register() {
       </div>
     </>
   );
+}
+
+interface formdata{
+  businessName:string,
+  motive:string,
+  currency:string,
+  role:string,
+  infrastructure:string,
 }
