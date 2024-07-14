@@ -9,7 +9,9 @@ export default async function Page(){
  }
     return (
         <>
-          <Register userId={userId} />
+          <div className="lg:block hidden ">
+            <Register userId={userId} />
+          </div>
         </>
     )
 }
