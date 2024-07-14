@@ -1,3 +1,4 @@
+"use client";
 import { Open_Sans } from "next/font/google";
 
 const open = Open_Sans({ weight: ["600"], subsets: ["hebrew"] });
@@ -59,6 +60,10 @@ export default function Register() {
                     <option value={`physical`}>Physical</option>
                     <option value={`technology`}>Technology</option>
                  </select>
+              </div>
+              <div className="flex flex-col p-4 gap-2">
+                <label htmlFor="motive">Profit Motive</label>
+                <input type="text" name="motive" className="bg-[#EBF4F6] w-60 rounded-lg p-4" />
               </div>
             </form>
           </div>
