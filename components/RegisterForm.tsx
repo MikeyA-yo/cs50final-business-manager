@@ -1,8 +1,34 @@
 "use client";
 import { useState } from "react";
 import { formdata } from "./register";
-
-export default function RegisterForm() {
+async function submitForm(data:formdata, userId?:string){
+  if(typeof userId === "string" && userId.length < 8){
+     return
+  }
+  const {motive, infrastructure, currency,role} = data;
+  const name = data.businessName;
+  const body = {
+    name,
+    motive,
+    infrastructure,
+    currency,
+    role,
+    userId
+  }
+  const bodyJson = JSON.stringify(body);
+  const res = await fetch("/api/register",{
+    method:"POST",
+    body:bodyJson
+  });
+  const result = await res.json();
+  if(result.error){
+    console.log(result.error);
+    return;
+  }
+  console.log(result.message);
+  return
+}
+export default function RegisterForm({userId}:{userId?:string}) {
   const [data, setData] = useState<formdata>({
     businessName: "",
     motive: "",
@@ -26,10 +52,14 @@ export default function RegisterForm() {
   };
   return (
     <>
-      <form className="flex flex-col text-[#37B7C3] items-center p-4 bg-[#071952] justify-evenly">
+      <form onSubmit={(e)=>{
+        e.preventDefault()
+        submitForm(data, userId)
+      }} className="flex flex-col text-[#37B7C3] items-center p-4 bg-[#071952] justify-evenly">
         <div className="flex flex-col gap-2">
           <label htmlFor="businessName">Business Name: </label>
           <input
+            required
             name="businessName"
             className="bg-[#EBF4F6] w-60 rounded-lg p-4"
             autoComplete="off"
@@ -41,6 +71,7 @@ export default function RegisterForm() {
         <div className="flex flex-col p-4 gap-2">
           <label htmlFor="currency">Currency: </label>
           <select
+            required
             onChange={handleSelectChange}
             name="currency"
             className="bg-[#EBF4F6] w-60 rounded-lg p-4"
@@ -52,6 +83,7 @@ export default function RegisterForm() {
         <div className="flex flex-col p-4 gap-2">
           <label htmlFor="infrastructure">Primary Infrastructure Type:</label>
           <select
+            required
             name="infrastructure"
             onChange={handleSelectChange}
             className="bg-[#EBF4F6] w-60 rounded-lg p-4"
@@ -63,6 +95,7 @@ export default function RegisterForm() {
         <div className="flex flex-col p-4 gap-2">
           <label htmlFor="motive">Profit Motive</label>
           <input
+            required
             onChange={handleChange}
             type="text"
             name="motive"
@@ -73,6 +106,7 @@ export default function RegisterForm() {
         <div className="flex flex-col p-4 gap-2">
           <label htmlFor="role">Role? (employer or employee)</label>
           <select
+            required
             name="role"
             onChange={handleSelectChange}
             className="bg-[#EBF4F6] w-60 rounded-lg p-4"
@@ -82,24 +116,29 @@ export default function RegisterForm() {
             <option value={`freelancer`}>Freelancer</option>
           </select>
         </div>
+        <div className="bg-[#37B7C3] text-[#071952] p-2 rounded-lg">
+          <button type="submit">Register Business</button>
+        </div>
       </form>
     </>
   );
 }
-function MobileRegForm(){
+function MobileRegForm({userId}:{userId?:string}) {
   return (
     <>
-     <div className="min-h-screen bg-[#37B7C3] flex items-center justify-center p-4">
-      <RegisterForm />
-     </div>
+      <div className="min-h-screen bg-[#37B7C3] flex items-center justify-center p-4">
+        <RegisterForm userId={userId} />
+      </div>
     </>
-  )
+  );
 }
-export function MobileReg() {
-  const [cleared, setCleared] = useState("")
+export function MobileReg({userId}:{userId?:string}) {
+  const [cleared, setCleared] = useState("");
   return (
     <>
-      <div className={`bg-[#071952] min-h-screen ${cleared} p-4 text-center gap-4 flex-col items-center justify-evenly text-[#EBF4F6] flex`}>
+      <div
+        className={`bg-[#071952] min-h-screen ${cleared} p-4 text-center gap-4 flex-col items-center justify-evenly text-[#EBF4F6] flex`}
+      >
         <h1 className="lg:text-3xl text-xl">Register your Business(es)</h1>
         <p>
           Complete your registration with Business Manager
@@ -124,24 +163,32 @@ export function MobileReg() {
           </p>
         </div>
         <p> You can always edit any of this settings.</p>
-        <button className="bg-[#37B7C3] p-2 rounded" onClick={()=>{setCleared("hidden")}}>Continue &gt;</button>
+        <button
+          className="bg-[#37B7C3] p-2 rounded"
+          onClick={() => {
+            setCleared("hidden");
+          }}
+        >
+          Continue &gt;
+        </button>
       </div>
-      {cleared === "hidden" ? <MobileRegForm /> : <></>}
+      {cleared === "hidden" ? <MobileRegForm userId={userId} /> : <></>}
     </>
   );
 }
-function RegisterBusiness({
-  name,
-  currency,
-  profitMotive,
-  infrastructure,
-  role,
-  userId,
-}: {
-  name: string;
-  currency: string;
-  profitMotive: string;
-  infrastructure: string;
-  role: string;
-  userId: string;
-}) {}
+
+// function RegisterBusiness({
+//   name,
+//   currency,
+//   profitMotive,
+//   infrastructure,
+//   role,
+//   userId,
+// }: {
+//   name: string;
+//   currency: string;
+//   profitMotive: string;
+//   infrastructure: string;
+//   role: string;
+//   userId: string;
+// }) {}

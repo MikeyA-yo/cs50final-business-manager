@@ -1,9 +1,29 @@
 import { Open_Sans } from "next/font/google";
 import RegisterForm, { MobileReg } from "./RegisterForm";
+import { clientPromise } from "@/app/api/mongodb";
+import { redirect } from "next/navigation";
+import { auth } from "@/app/api/auth/auth";
 
 const open = Open_Sans({ weight: ["600"], subsets: ["hebrew"] });
 
-export default function Register({ userId }: { userId?: string }) {
+export default async function Register() {
+  const { user } = await auth();
+  if(!user){
+    return redirect("/")
+  }
+  let userId = "";
+  if (user) {
+    userId = user.id.toString();
+  }
+
+  const client = await clientPromise;
+  const db = client.db("BusinessManager");
+  const businesses = db.collection("businesses");
+  const business = await businesses.findOne({ userId });
+  if (business) {
+    return redirect("/");
+  }
+
   return (
     <>
       <div
@@ -37,8 +57,8 @@ export default function Register({ userId }: { userId?: string }) {
           <p> You can always edit any of this settings.</p>
         </div>
         <div className="w-full">
-          <div className="w-full flex flex-col gap-4 items-center justify-center">
-           <RegisterForm />
+          <div className="w-full flex flex-col  gap-4 items-center justify-center">
+            <RegisterForm userId={userId} />
           </div>
         </div>
       </div>
@@ -46,12 +66,27 @@ export default function Register({ userId }: { userId?: string }) {
   );
 }
 
-export function RegisterMobile({ userId }: { userId?: string }){
+export async function RegisterMobile() {
+  const { user } = await auth();
+  if(!user){
+    return redirect("/")
+  }
+  let userId = "";
+  if (user) {
+    userId = user.id.toString();
+  }
+  const client = await clientPromise;
+  const db = client.db("BusinessManager");
+  const businesses = db.collection("businesses");
+  const business = await businesses.findOne({ userId });
+  if (business) {
+    return redirect("/");
+  }
   return (
     <>
-      <MobileReg />
+      <MobileReg userId={userId} />
     </>
-  )
+  );
 }
 export interface formdata {
   businessName: string;
