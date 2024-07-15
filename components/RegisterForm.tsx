@@ -86,16 +86,26 @@ export default function RegisterForm() {
     </>
   );
 }
-export function MobileReg() {
+function MobileRegForm(){
   return (
     <>
-      <div className="bg-[#071952] gap-4 flex-col items-center justify-evenly text-[#EBF4F6] flex">
+     <div className="min-h-screen bg-[#37B7C3] flex items-center justify-center p-4">
+      <RegisterForm />
+     </div>
+    </>
+  )
+}
+export function MobileReg() {
+  const [cleared, setCleared] = useState("")
+  return (
+    <>
+      <div className={`bg-[#071952] min-h-screen ${cleared} p-4 text-center gap-4 flex-col items-center justify-evenly text-[#EBF4F6] flex`}>
         <h1 className="lg:text-3xl text-xl">Register your Business(es)</h1>
         <p>
           Complete your registration with Business Manager
           <br /> for best perfomance
         </p>
-        <div className="bg-[#37B7C3] p-4 rounded">
+        <div className="bg-[#37B7C3]  rounded">
           <p>Boost Efficiency</p>
           <p>
             {" "}
@@ -104,7 +114,7 @@ export function MobileReg() {
             <br /> Reduce administrative burdens and focus on what matters most.
           </p>
         </div>
-        <div className="bg-[#37B7C3] p-4 rounded">
+        <div className="bg-[#37B7C3]  rounded">
           <p>Get Started</p>
           <p>
             Join our community of business owners who trust Business Manager
@@ -114,7 +124,9 @@ export function MobileReg() {
           </p>
         </div>
         <p> You can always edit any of this settings.</p>
+        <button className="bg-[#37B7C3] p-2 rounded" onClick={()=>{setCleared("hidden")}}>Continue &gt;</button>
       </div>
+      {cleared === "hidden" ? <MobileRegForm /> : <></>}
     </>
   );
 }
