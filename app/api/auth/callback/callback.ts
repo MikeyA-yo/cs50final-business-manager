@@ -20,6 +20,9 @@ export async function callback(req: Request) {
   ) {
     return new Response(null, {
       status: 400,
+      headers:{
+        Location: "/error/Bad Request",
+      },
     });
   }
   try {

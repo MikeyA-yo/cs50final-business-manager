@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
 import { formdata } from "./register";
-async function submitForm(data:formdata, userId?:string){
+import { Spinner } from "./someSvgs";
+import { useRouter } from "next/navigation";
+async function submitForm(data:formdata, userId?:string, router?:any){
   if(typeof userId === "string" && userId.length < 8){
      return
   }
@@ -26,9 +28,12 @@ async function submitForm(data:formdata, userId?:string){
     return;
   }
   console.log(result.message);
-  return
+  router.replace("/")
+  return 
 }
 export default function RegisterForm({userId}:{userId?:string}) {
+  const router = useRouter()
+  const [isLoading, setIsLoadig] = useState(false);
   const [data, setData] = useState<formdata>({
     businessName: "",
     motive: "",
@@ -54,7 +59,8 @@ export default function RegisterForm({userId}:{userId?:string}) {
     <>
       <form onSubmit={(e)=>{
         e.preventDefault()
-        submitForm(data, userId)
+        submitForm(data, userId, router)
+        setIsLoadig(false)
       }} className="flex flex-col text-[#37B7C3] items-center p-4 bg-[#071952] justify-evenly">
         <div className="flex flex-col gap-2">
           <label htmlFor="businessName">Business Name: </label>
@@ -117,7 +123,9 @@ export default function RegisterForm({userId}:{userId?:string}) {
           </select>
         </div>
         <div className="bg-[#37B7C3] text-[#071952] p-2 rounded-lg">
-          <button type="submit">Register Business</button>
+          <button type="submit" className="flex gap-1" onClick={()=>{
+            setIsLoadig(true)
+          }}>Register Business {isLoading && <Spinner className="animate-spin size-8" />}</button>
         </div>
       </form>
     </>
