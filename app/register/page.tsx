@@ -1,4 +1,4 @@
-import Register from "@/components/register";
+import Register, { RegisterMobile } from "@/components/register";
 import { auth } from "../api/auth/auth";
 
 export default async function Page(){
@@ -11,6 +11,9 @@ export default async function Page(){
         <>
           <div className="lg:block hidden ">
             <Register userId={userId} />
+          </div>
+          <div className="lg:hidden block">
+            <RegisterMobile userId={userId} />
           </div>
         </>
     )
