@@ -31,6 +31,11 @@ export async function CreateAccountv2(
         message: "Invalid Email",
       };
     }
+    if(password.toString().length < 4){
+      return {
+        message: "Minimum password length of 4 characters",
+      };
+    }
     const existingUser = await users.findOne({ email });
     if (existingUser) {
       return {

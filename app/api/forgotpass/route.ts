@@ -2,9 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { createTransport } from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 import { clientPromise } from "../mongodb";
+import { isValidEmail } from "../auth/login/email/functions";
 
 export async function POST(req: NextRequest) {
   const { email } = await req.json();
+  if(!isValidEmail(email)){
+    return NextResponse.json({error:"Invalid Email address"})
+  }
   const transport = createTransport({
     service: "gmail",
     auth: {
@@ -19,6 +23,9 @@ export async function POST(req: NextRequest) {
   const user = await users.findOne({ email });
   if (!user) {
     return NextResponse.json({ error: "User Not Found" });
+  }
+  if(!user.hashedPassword){
+    return NextResponse.json({ error: "User Not Created with email" });
   }
   const token = tokenGen(7);
   const name = user.name as string;
