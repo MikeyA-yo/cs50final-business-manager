@@ -22,6 +22,17 @@ export default function ResetPassword(){
         setSent(true);
         return
     }
+    if(sent){
+        return (
+            <>
+              <div className={`flex flex-col items-center lg:text-center justify-center min-h-screen ${mont.className}`}>
+                <div className="flex flex-col gap-2 p-6 rounded-lg shadow-lg shadow-[#37B7C3] bg-[#EBF4F6]">
+                   <h2 className="lg:text-2xl text-wrap">Check your email {email} for a token,<br /> then click reset password<br /> and enter that token</h2>
+                </div>
+              </div>
+            </>
+        )
+    }
     return (
         <>
         <div className={`flex flex-col items-center lg:text-center justify-center min-h-screen ${mont.className}`}>

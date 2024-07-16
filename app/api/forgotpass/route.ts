@@ -95,6 +95,7 @@ export async function POST(req: NextRequest) {
                 <p>You requested a password reset. Please use the following token to reset your password:</p>
                 <p><strong>${token}</strong></p>
                 <p>If you did not request this, please ignore this email.</p>
+                <p>This token expires in 10 minutes time.</p>
                 <a href="http://localhost:3000/reset-password?token=${token}" class="button">Reset Password</a>
             </div>
             <div class="footer">
