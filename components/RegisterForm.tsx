@@ -60,7 +60,6 @@ export default function RegisterForm({userId}:{userId?:string}) {
       <form onSubmit={(e)=>{
         e.preventDefault()
         submitForm(data, userId, router)
-        setIsLoadig(false)
       }} className="flex flex-col text-[#37B7C3] items-center p-4 bg-[#071952] justify-evenly">
         <div className="flex flex-col gap-2">
           <label htmlFor="businessName">Business Name: </label>
@@ -184,19 +183,3 @@ export function MobileReg({userId}:{userId?:string}) {
     </>
   );
 }
-
-// function RegisterBusiness({
-//   name,
-//   currency,
-//   profitMotive,
-//   infrastructure,
-//   role,
-//   userId,
-// }: {
-//   name: string;
-//   currency: string;
-//   profitMotive: string;
-//   infrastructure: string;
-//   role: string;
-//   userId: string;
-// }) {}

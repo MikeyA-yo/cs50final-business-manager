@@ -1,6 +1,6 @@
 import Register, { RegisterMobile } from "@/components/register";
 
-export default  function Page(){
+export default function Page(){
     return (
         <>
           <div className="lg:block hidden ">

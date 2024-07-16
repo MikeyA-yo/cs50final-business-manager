@@ -19,13 +19,6 @@ export default async function Login() {
         className={`flex bg-[#071952] items-center justify-center min-h-[100svh] ${inter.className}`}
       >
         <div className="lg:flex flex-col md:flex hidden items-center w-full justify-center ">
-          <h2 className="text-xl text-center text-[#EBF4F6]">
-            If you used Google to create an account
-            <br />
-            then use it to log in when you have to
-            <br />
-            Vice Versa can be said for Emails
-          </h2>
           <Image
             src={`/finance.svg`}
             alt="random alt"
