@@ -1,11 +1,12 @@
 "use client";
 
-import { useFormState } from "react-dom"
+import { useFormState } from "react-dom";
 import { useState } from "react";
 import Email from "./email";
 import { CreateAccountv2 } from "./emailServerworkings";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { Spinner } from "./someSvgs";
 
 export default function EmailSignIn() {
   const [openForm, setOpenForm] = useState(false);
@@ -45,11 +46,12 @@ export default function EmailSignIn() {
 }
 
 function Form() {
-  const [state, formAction] = useFormState(CreateAccountv2, { message: "" })
+  const [state, formAction] = useFormState(CreateAccountv2, { message: "" });
   const [showP, setShowP] = useState("password");
-  if (state.message && state.message.length > 4){
-    return redirect(`/error/${state.message}`)
- }
+  const [load, setLoad] = useState(false);
+  if (state.message && state.message.length > 4) {
+    return redirect(`/error/${state.message}`);
+  }
   // const [data, setData] = useState<formdata>({
   //   firstName: "",
   //   lastName: "",
@@ -66,9 +68,7 @@ function Form() {
   return (
     <>
       <div>
-        <form
-          action={formAction}
-        >
+        <form action={formAction}>
           <div className="flex w-full flex-col gap-2 justify-center items-center">
             <div className="flex w-full lg:px-3 lg:flex-row flex-col items-center gap-2 justify-center">
               <div className="flex flex-col">
@@ -143,12 +143,13 @@ function Form() {
                 </span>
               </div>
             </div>
-            <div>
+            <div onClick={() => setLoad(true)}>
               <button
                 type="submit"
-                className="bg-[#071952] bg-opacity-50 m-2 p-2 rounded-lg"
+                className="bg-[#071952] bg-opacity-50 m-2 flex items-center justify-center gap-1 p-2 rounded-lg"
               >
                 Create Account
+                {load && <Spinner className="animate-spin size-8" />}
               </button>
             </div>
           </div>
@@ -159,8 +160,9 @@ function Form() {
 }
 
 function LoginForm() {
-  const [state, formAction] = useFormState(CreateAccountv2, { message: "" })
+  const [state, formAction] = useFormState(CreateAccountv2, { message: "" });
   const [showP, setShowP] = useState("password");
+  const [load, setLoad] = useState(false);
   // const [data, setData] = useState<formdata>({
   //   email: "",
   //   password: "",
@@ -172,15 +174,13 @@ function LoginForm() {
   //     [name]: value,
   //   }));
   // };
- if (state.message && state.message.length > 4){
-    return redirect(`/error/${state.message}`)
- }
+  if (state.message && state.message.length > 4) {
+    return redirect(`/error/${state.message}`);
+  }
   return (
     <>
       <div>
-        <form
-          action={formAction}
-        >
+        <form action={formAction}>
           <div className="flex w-full flex-col gap-2 justify-center items-center">
             <div className="flex flex-col">
               <label htmlFor="email">Email*</label>
@@ -233,17 +233,19 @@ function LoginForm() {
                 </span>
               </div>
             </div>
-            <div>
+            <div onClick={() => setLoad(true)}>
               <button
                 type="submit"
-                className="bg-[#071952] bg-opacity-50 m-2 p-2 rounded-lg"
+                className="bg-[#071952] bg-opacity-50 flex items-center justify-center gap-1 m-2 p-2 rounded-lg"
               >
-                Login
+                Login {load && <Spinner className="animate-spin size-8" />}
               </button>
             </div>
           </div>
         </form>
-        <p className="flex items-center justify-center"><Link href={`/reset-password`} >Forgot password? </Link></p>
+        <p className="flex items-center justify-center">
+          <Link href={`/reset-password`}>Forgot password? </Link>
+        </p>
       </div>
     </>
   );
