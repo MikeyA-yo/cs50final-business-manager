@@ -1,6 +1,10 @@
 import { Montserrat } from "next/font/google"
 import Link from "next/link"
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title:"Error"
+}
 const mont = Montserrat({weight:["700"], subsets:["vietnamese"]})
 export default function Page({params}:{params:{text:string}}){
     let error = params.text.replaceAll("%20"," ")

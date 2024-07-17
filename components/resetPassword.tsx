@@ -2,37 +2,59 @@
 
 import { Montserrat } from "next/font/google";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import OtpInput from "react-otp-input";
+import { Spinner } from "./someSvgs";
 const mont = Montserrat({ weight: ["500"], subsets: ["vietnamese"] });
 function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return <input required {...props} />;
 }
 
 export default function ResetPassword() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
+  const [load, setLoad] = useState(false)
   const [sent, setSent] = useState(false);
   const [user, setUser] = useState<any>();
   const searchParams = useSearchParams();
   const [otp, setOtp] = useState("");
+  const [newPass, setNewPass] = useState("");
+  const [confirm, setConfirm] = useState("")
   const token = searchParams.get("token");
-
+  
   async function checkToken(token: string) {
     try {
+      setLoad(true)
       const res = await fetch("/api/comparetoken", {
         method: "POST",
         body: JSON.stringify({ token }),
       });
       const user = await res.json();
+      setLoad(false)
       if (user.error) {
-        console.log(user.error);
+        router.replace(`/error/${user.error}`);
         return;
       }
       setUser(user);
     } catch (e) {
       console.log(e);
     }
+  }
+  async function changePassword(user:any, newPass:string){
+    if(newPass.length < 4 || !user){
+       return;
+    }
+    const res = await fetch("/api/resetpass",{
+      method:"POST",
+      body:JSON.stringify({user, newPass})
+    })
+    const result = await res.json();
+    if(result.error){
+      router.replace(`/error/${result.error}`);
+      return;
+    }
+    return router.replace(`/`);
   }
   if (token && token.length === 7) {
     return (
@@ -59,21 +81,26 @@ export default function ResetPassword() {
                   }}
                 />
                 <button
-                  className="bg-white p-2"
+                  className="bg-white flex gap-2 items-center justify-center p-2"
                   onClick={() => checkToken(otp)}
                 >
                   Enter
+                  {load && <Spinner className="animate-spin size-8" />}
                 </button>
               </>
             )}
             {user && (
-                <>
+              <>
                 <p>New Password</p>
-                <input type="text" required className="p-2" />
+                <input type="text" required className="p-2" onChange={(e)=> setNewPass(e.target.value)}/>
                 <p>Confirm Password</p>
-                <input type="text" required className="p-2" />
-                <button className="bg-white p-2">Change Password</button>
-                </>
+                <input type="text" required className="p-2" onChange={(e)=>setConfirm(e.target.value)} />
+                <button className="bg-white flex gap-1 items-center justify-center p-2" onClick={()=>{
+                  if(newPass === confirm){
+                    changePassword(user, newPass)
+                  }
+                }}>Change Password {load && <Spinner className="animate-spin size-8" />}</button>
+              </>
             )}
           </div>
         </div>
@@ -85,12 +112,15 @@ export default function ResetPassword() {
       return;
     }
     try {
+      setLoad(true)
       const res = await fetch("/api/forgotpass", {
         method: "POST",
         body: JSON.stringify({ email }),
       });
       const result = await res.json();
+      setLoad(false)
       if (result.error) {
+        router.replace(`/error/${result.error}`);
         return;
       }
       setSent(true);
@@ -133,12 +163,13 @@ export default function ResetPassword() {
             placeholder="example@xyz.com"
           />
           <button
-            className="bg-white p-2"
+            className="bg-white flex gap-2 items-center justify-center p-2"
             onClick={() => {
               sendToken(email);
             }}
           >
             Send Token
+            {load && <Spinner className="animate-spin size-8" />}
           </button>
           <p className="p-2 text-center">
             <Link href={`/login`}>&lt;- Back to Login</Link>

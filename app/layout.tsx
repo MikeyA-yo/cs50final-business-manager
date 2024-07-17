@@ -7,7 +7,10 @@ import NavSc from "@/components/Nav-SC";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Business Manager",
+  title: {
+    template:"Business Manager | %s",
+    default:"Business Manager"
+  },
   description: "Manage Businesses Efficently, generate customer invoices and keep track of expenditures",
 };
 

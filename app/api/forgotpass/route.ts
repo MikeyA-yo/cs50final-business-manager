@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
 
 function tokenGen(size: number) {
   const tokens =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_&?$%-";
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_$-";
   let token = "";
   for (let i = 0; i < size; i++) {
     token += tokens.charAt(Math.floor(Math.random() * tokens.length));
