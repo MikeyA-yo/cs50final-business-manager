@@ -1,4 +1,5 @@
-import ResetPassword from "@/components/resetPassword";
+
+import ResetPass from "@/components/resetServerComponent";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
 export default function Page(){
     return (
         <>
-          <ResetPassword />
+          <ResetPass />
         </>
     )
 }
