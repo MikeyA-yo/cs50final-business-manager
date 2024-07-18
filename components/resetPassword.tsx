@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import OtpInput from "react-otp-input";
 import { Spinner } from "./someSvgs";
+import { Err } from "./utilComps";
 const mont = Montserrat({ weight: ["500"], subsets: ["vietnamese"] });
 function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return <input required {...props} />;
@@ -21,6 +22,8 @@ export default function ResetPassword() {
   const [otp, setOtp] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirm, setConfirm] = useState("")
+  const [err, setErr]=useState(false)
+  const [errText, setErrText] = useState("Something went wrong")
   const token = searchParams.get("token");
   
   async function checkToken(token: string) {
@@ -43,6 +46,8 @@ export default function ResetPassword() {
   }
   async function changePassword(user:any, newPass:string){
     if(newPass.length < 4 || !user){
+      setErr(true)
+      setErrText("Password requires minimum of 4 characters")
        return;
     }
     const res = await fetch("/api/resetpass",{
@@ -91,6 +96,7 @@ export default function ResetPassword() {
             )}
             {user && (
               <>
+               {err && <Err message={errText} onClick={()=>setErr(false)} />}
                 <p>New Password</p>
                 <input type="text" required className="p-2" onChange={(e)=> setNewPass(e.target.value)}/>
                 <p>Confirm Password</p>
