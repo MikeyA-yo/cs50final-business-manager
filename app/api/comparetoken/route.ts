@@ -12,6 +12,7 @@ export async function POST(req: Request) {
     return NextResponse.json({error:"Invalid token"})
   }
   if(parseInt(currentToken.expires) < Date.now()){
+    tokens.deleteOne({token})
     return NextResponse.json({error:"Token expired"})
   }
   const user = await users.findOne({_id:currentToken.userId})

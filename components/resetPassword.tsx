@@ -104,6 +104,9 @@ export default function ResetPassword() {
                 <button className="bg-white flex gap-1 items-center justify-center p-2" onClick={()=>{
                   if(newPass === confirm){
                     changePassword(user, newPass)
+                  }else{
+                    setErr(true);
+                    setErrText("Passwords mismatch")
                   }
                 }}>Change Password {load && <Spinner className="animate-spin size-8" />}</button>
               </>
