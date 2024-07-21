@@ -3,6 +3,7 @@ import { clientPromise } from "@/app/api/mongodb";
 import bcrypt from "bcrypt"
 import { auth, lucia } from "../../auth";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 
 
@@ -124,23 +125,11 @@ export async function signOut(){
     const cookie = cookies();
     const {session} = await auth()
     if(!session){
-        return new Response(
-            "User Not logged In", {
-                status:400,
-                headers: {
-                    Location: "/login",
-                  },
-            }
-        )
+        return redirect("/login")
     }
     await lucia.invalidateSession(session.id);
 
 	const sessionCookie = lucia.createBlankSessionCookie();
 	cookie.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-    return new Response(null, {
-        status: 302,
-        headers: {
-          Location: "/",
-        },
-      });
+    return redirect("/")
 }

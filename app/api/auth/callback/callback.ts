@@ -52,7 +52,7 @@ export async function callback(req: Request) {
       return new Response(null, {
         status: 302,
         headers: {
-          Location: "/",
+          Location: "/dashboard",
         },
       });
     }
@@ -67,7 +67,7 @@ export async function callback(req: Request) {
       return new Response(null, {
         status: 302,
         headers: {
-          Location: "/",
+          Location: "/register",
         },
       });
   } catch (e) {

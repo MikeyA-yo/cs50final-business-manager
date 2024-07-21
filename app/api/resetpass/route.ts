@@ -28,6 +28,6 @@ export async function POST(req:Request){
             "passChange":""
         }
     }
-    users.updateOne({_id:userDb._id}, update)
+    await users.updateOne({_id:userDb._id}, update)
     return NextResponse.json({})
 }
