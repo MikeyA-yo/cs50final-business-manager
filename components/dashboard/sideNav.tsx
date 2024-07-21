@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Signout, UserPlus } from "../someSvgs";
+import { Invoice, Signout, UserPlus } from "../someSvgs";
 
 export default function SideNav() {
   return (
@@ -11,7 +11,7 @@ export default function SideNav() {
             <p>Total: 9099</p>
             <p>Last Week: 9999</p>
           </div>
-          <div className="bg-[#37B7C3] rounded-lg p-2"><Link href={`/dashboard/invoices`}>Invoices</Link></div>
+          <div className="bg-[#37B7C3] rounded-lg p-2"><Link href={`/dashboard/invoices`} className="flex gap-2">Invoices <Invoice className="size-6" /></Link></div>
           <div className="bg-[#37B7C3] rounded-lg p-2">
             <Link href={`/dashboard/invoices`} className="flex gap-2">Customers <UserPlus className="size-6" /></Link>
           </div>
