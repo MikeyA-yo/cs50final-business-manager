@@ -2,7 +2,7 @@ export default function Dashboard(){
     return (
         <>
           <div>
-            Yo
+           wow
           </div>
         </>
     )
