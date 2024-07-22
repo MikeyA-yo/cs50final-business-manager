@@ -59,6 +59,10 @@ export default function RegisterForm({userId}:{userId?:string}) {
     <>
       <form onSubmit={(e)=>{
         e.preventDefault()
+        if(data.businessName.length > 10 || data.motive.length > 25 ){
+          alert("Business Name or Motive too long (btw if github sometimes uses alert why can't i?)")
+          return
+        }
         submitForm(data, userId, router)
       }} className="flex flex-col text-[#37B7C3] items-center p-4 bg-[#071952] justify-evenly">
         <div className="flex flex-col gap-2">

@@ -12,23 +12,23 @@ import {
 const data = [
   {
     name: "Page A",
-    uv: 4000,
-    pv: 2400,
+    in: 4000,
+    out: 2400,
   },
   {
     name: "Page B",
-    uv: 3000,
-    pv: 1398,
+    in: 3000,
+    out: 1398,
   },
   {
     name: "Page C",
-    uv: 2000,
-    pv: 9800,
+    in: 2000,
+    out: 9800,
   },
   {
     name: "Page D",
-    uv: 2780,
-    pv: 3908,
+    in: 2780,
+    out: 3908,
   },
 ];
 export default function Chart({dataSet}:{dataSet?:any}) {
@@ -41,8 +41,8 @@ export default function Chart({dataSet}:{dataSet?:any}) {
           <YAxis  />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" fill="#088395" />
-          <Bar dataKey="uv" fill="#37B7C3" />
+          <Bar dataKey="out" fill="#088395" />
+          <Bar dataKey="in" fill="#37B7C3" />
         </BarChart>
       </ResponsiveContainer>
     </>
