@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { DashBar, Invoice, Signout, UserPlus, XMark } from "../someSvgs";
+import { DashBar, Invoice, Signout, UserPlus, Wallet, XMark } from "../someSvgs";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -16,12 +16,17 @@ export default function SideNav() {
             <p>Last Week: 9999</p>
           </div>
           <div className="bg-[#37B7C3] rounded-lg p-2">
+              <Link href={`/dashboard`} className="flex gap-2">
+               Dashboard <Wallet className="size-6" />
+              </Link>
+            </div>
+          <div className="bg-[#37B7C3] rounded-lg p-2">
             <Link href={`/dashboard/invoices`} className="flex gap-2">
               Invoices <Invoice className="size-6" />
             </Link>
           </div>
           <div className="bg-[#37B7C3] rounded-lg p-2">
-            <Link href={`/dashboard/invoices`} className="flex gap-2">
+            <Link href={`/dashboard/customers`} className="flex gap-2">
               Customers <UserPlus className="size-6" />
             </Link>
           </div>
@@ -83,7 +88,7 @@ function MobileNav({
         transition={{ duration: 0.5 }}
         animate="open"
         exit="closed"
-        className="flex flex-col min-h-screen bg-[#071952] p-4  items-center justify-between"
+        className="flex flex-col min-h-screen bg-[#071952] p-4 items-center justify-between"
       >
         <div>
           <div onClick={onClick}>
@@ -96,12 +101,17 @@ function MobileNav({
               <p>Last Week: 9999</p>
             </div>
             <div className="bg-[#37B7C3] rounded-lg p-2">
+              <Link href={`/dashboard`} className="flex gap-2">
+               Dashboard <Wallet className="size-6 text-black" />
+              </Link>
+            </div>
+            <div className="bg-[#37B7C3] rounded-lg p-2">
               <Link href={`/dashboard/invoices`} className="flex gap-2">
                 Invoices <Invoice className="size-6" />
               </Link>
             </div>
             <div className="bg-[#37B7C3] rounded-lg p-2">
-              <Link href={`/dashboard/invoices`} className="flex gap-2">
+              <Link href={`/dashboard/customers`} className="flex gap-2">
                 Customers <UserPlus className="size-6" />
               </Link>
             </div>

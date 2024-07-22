@@ -34,11 +34,11 @@ const data = [
 export default function Chart({dataSet}:{dataSet?:any}) {
   return (
     <>
-      <ResponsiveContainer height={"100%"} width={"100%"}  minHeight={300} minWidth={150}>
+      <ResponsiveContainer height={"100%"} width={"100%"}  minHeight={230} minWidth={150}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis  />
           <Tooltip />
           <Legend />
           <Bar dataKey="pv" fill="#088395" />
