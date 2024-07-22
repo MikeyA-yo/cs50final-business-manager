@@ -31,10 +31,10 @@ const data = [
     pv: 3908,
   },
 ];
-export default function Chart() {
+export default function Chart({dataSet}:{dataSet?:any}) {
   return (
     <>
-      <ResponsiveContainer height={"100%"} width={"80%"}  minHeight={300} minWidth={150}>
+      <ResponsiveContainer height={"100%"} width={"100%"}  minHeight={300} minWidth={150}>
         <BarChart  data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
