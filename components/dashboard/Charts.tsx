@@ -31,14 +31,32 @@ const data = [
     out: 3908,
   },
 ];
-export default function Chart({dataSet}:{dataSet?:any}) {
+export type ChartLike = MoneyData[];
+
+export interface MoneyData {
+  name: string;
+  in: number;
+  out: number;
+}
+export default function Chart({ dataSet }: { dataSet?: ChartLike }) {
+    let chartData:ChartLike;
+  if (!dataSet) {
+    chartData = data
+  }else{
+    chartData = dataSet
+  }
   return (
     <>
-      <ResponsiveContainer height={"100%"} width={"100%"}  minHeight={230} minWidth={150}>
-        <BarChart data={data}>
+      <ResponsiveContainer
+        height={"100%"}
+        width={"100%"}
+        minHeight={230}
+        minWidth={150}
+      >
+        <BarChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis  />
+          <YAxis />
           <Tooltip />
           <Legend />
           <Bar dataKey="out" fill="#088395" />

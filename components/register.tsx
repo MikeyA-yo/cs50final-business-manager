@@ -21,7 +21,7 @@ export default async function Register() {
   const businesses = db.collection("businesses");
   const business = await businesses.findOne({ userId });
   if (business) {
-    return redirect("/");
+    return redirect("/dashboard");
   }
 
   return (

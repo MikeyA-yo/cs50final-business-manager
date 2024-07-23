@@ -88,7 +88,7 @@ function MobileNav({
         transition={{ duration: 0.5 }}
         animate="open"
         exit="closed"
-        className="flex flex-col min-h-screen bg-[#071952] p-4 items-center justify-between"
+        className="flex flex-col h-screen bg-[#071952] p-4 items-center justify-between"
       >
         <div>
           <div onClick={onClick}>
