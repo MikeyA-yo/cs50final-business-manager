@@ -2,6 +2,8 @@ import { auth } from "@/app/api/auth/auth";
 import Chart from "./Charts";
 import { redirect } from "next/navigation";
 import { clientPromise } from "@/app/api/mongodb";
+import { Montserrat } from "next/font/google";
+const mont = Montserrat({weight:["500"], subsets:["vietnamese"]})
 const defaultIncome = [
   {
     name: "A",
@@ -38,7 +40,7 @@ export default async function Dashboard() {
   }
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center gap-2 justify-center bg-[#EBF4F6] w-full">
+      <div className={`min-h-screen flex flex-col items-center gap-2 justify-center bg-[#EBF4F6] w-full ${mont.className}`}>
         <div>
           <h2 className="text-xl">{business?.name ?? "Your Business Name"} Analytics</h2>
         </div>

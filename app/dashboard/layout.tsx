@@ -16,7 +16,7 @@ export default async function DashboardLayout({
       return redirect("/login")
     }
     return (
-      <section className="flex min-h-screen">
+      <section className="flex min-h-screen w-full">
         <SideNav />
         {children}
       </section>

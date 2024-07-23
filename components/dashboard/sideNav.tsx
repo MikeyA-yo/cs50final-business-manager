@@ -3,9 +3,11 @@ import Link from "next/link";
 import { DashBar, Invoice, Signout, UserPlus, Wallet, XMark } from "../someSvgs";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 export default function SideNav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
   return (
     <>
       <div className="lg:flex md:flex hidden flex-col min-h-screen bg-[#071952] p-8 items-center justify-between">
@@ -15,17 +17,17 @@ export default function SideNav() {
             <p>Total: 9099</p>
             <p>Last Week: 9999</p>
           </div>
-          <div className="bg-[#37B7C3] rounded-lg p-2">
+          <div className={`bg-[#${pathname === "/dashboard"?"EBF4F6":"37B7C3"}] rounded-lg p-2`}>
               <Link href={`/dashboard`} className="flex gap-2">
                Dashboard <Wallet className="size-6" />
               </Link>
             </div>
-          <div className="bg-[#37B7C3] rounded-lg p-2">
+          <div className={`bg-[#${pathname === "/dashboard/invoices"?"EBF4F6":"37B7C3"}] rounded-lg p-2`}>
             <Link href={`/dashboard/invoices`} className="flex gap-2">
               Invoices <Invoice className="size-6" />
             </Link>
           </div>
-          <div className="bg-[#37B7C3] rounded-lg p-2">
+          <div className={`bg-[#${pathname === "/dashboard/customers"?"EBF4F6":"37B7C3"}] rounded-lg p-2`}>
             <Link href={`/dashboard/customers`} className="flex gap-2">
               Customers <UserPlus className="size-6" />
             </Link>
@@ -71,6 +73,7 @@ function MobileNav({
 }: {
   onClick: React.MouseEventHandler<HTMLDivElement>;
 }) {
+  const pathname = usePathname();
   const variants = {
     open: { opacity: [0, 0.6, 1], x: ["-50%", 0] },
     closed: {
@@ -100,17 +103,17 @@ function MobileNav({
               <p>Total: 9099</p>
               <p>Last Week: 9999</p>
             </div>
-            <div className="bg-[#37B7C3] rounded-lg p-2">
+            <div className={`bg-[#${pathname === "/dashboard"?"EBF4F6":"37B7C3"}] ${pathname === "/dashboard"?"text-black":""} rounded-lg p-2`}>
               <Link href={`/dashboard`} className="flex gap-2">
                Dashboard <Wallet className="size-6 text-black" />
               </Link>
             </div>
-            <div className="bg-[#37B7C3] rounded-lg p-2">
+            <div className={`bg-[#${pathname === "/dashboard/invoices"?"EBF4F6":"37B7C3"}] ${pathname === "/dashboard/invoices"?"text-black":""} rounded-lg p-2`}>
               <Link href={`/dashboard/invoices`} className="flex gap-2">
                 Invoices <Invoice className="size-6" />
               </Link>
             </div>
-            <div className="bg-[#37B7C3] rounded-lg p-2">
+            <div className={`bg-[#${pathname === "/dashboard/customers"?"EBF4F6":"37B7C3"}] ${pathname === "/dashboard/customers"?"text-black":""} rounded-lg p-2`}>
               <Link href={`/dashboard/customers`} className="flex gap-2">
                 Customers <UserPlus className="size-6" />
               </Link>
