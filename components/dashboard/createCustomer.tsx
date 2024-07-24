@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { UserPlus } from "../someSvgs";
 import { Err } from "../utilComps";
+import { useRouter } from "next/navigation";
 
 export default function CreateCustomer({ userID }: { userID: string }) {
   const [form, setForm] = useState(false);
@@ -10,6 +11,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
   const [email, setEmail] = useState("");
   const [errText, setErrText] = useState("Error Occured");
   const [err, setErr] = useState(false);
+  const router = useRouter()
   async function createCustomer(name: string, email: string) {
     const res = await fetch("/api/createcustomer", {
       method: "POST",
@@ -22,6 +24,9 @@ export default function CreateCustomer({ userID }: { userID: string }) {
       return;
     }
     setForm(false);
+    if(res.ok && !msg.error){
+      router.refresh()
+    }
   }
   return (
     <>
