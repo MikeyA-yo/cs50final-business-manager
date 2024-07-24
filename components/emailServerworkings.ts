@@ -57,6 +57,7 @@ export async function CreateAccountv2(
       sessionCookie.value,
       sessionCookie.attributes
     );
+    return redirect("/register")
   } else if (email && password) {
     const cookie = cookies();
     const client = await clientPromise;
@@ -93,5 +94,5 @@ export async function CreateAccountv2(
       );
     }
   }
-  return redirect("/");
+  return redirect("/dashboard");
 }
