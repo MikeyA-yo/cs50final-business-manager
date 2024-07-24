@@ -22,14 +22,33 @@ export default async function Customers(){
                 <h3 className="text-2xl">Customers</h3>
             </div>
             <CreateCustomer userID={user.id.toString()} />
-            <div>
+            <div className="flex flex-col gap-2 items-center">
+              <h2 className="text-3xl">Customers</h2>
+              <table>
+                {customersArray.length > 0 && (
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                  </tr>
+                )}
               {customersArray.length > 0 && customersArray.map((customer, i)=>{
                 return (
-                   <h3 key={i} className="text-2xl">{customer.name ?? ""}</h3>
+                   <CustomerTable name={customer.name ?? ""} email={customer.email ?? ""} key={i} />
                 )
               })}
+              </table>
+              {customersArray.length === 0 && <h3>No Customers Yet, create one</h3>}
             </div>
           </div>
         </>
     )
+}
+
+function CustomerTable({name, email}:{name:string, email:string}){
+  return (
+    <tr className="even:bg-[#37B7C3]">
+      <td className="tableData">{name}</td>
+      <td className="tableData">{email}</td>
+    </tr>
+  )
 }
