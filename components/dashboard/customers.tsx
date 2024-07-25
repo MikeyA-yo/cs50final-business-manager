@@ -32,6 +32,7 @@ export default async function Customers() {
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Invoices</th>
                 </tr>
               )}
               {customersArray.length > 0 &&
@@ -58,6 +59,7 @@ function CustomerTable({ name, email }: { name: string; email: string }) {
     <tr className="even:bg-[#37B7C3]">
       <td className="tableData">{name}</td>
       <td className="tableData">{email}</td>
+      <td>None Yet</td>
     </tr>
   );
 }
