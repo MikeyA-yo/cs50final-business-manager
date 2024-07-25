@@ -3,6 +3,7 @@ import CreateCustomer from "./createCustomer";
 import { auth } from "@/app/api/auth/auth";
 import { redirect } from "next/navigation";
 import { clientPromise } from "@/app/api/mongodb";
+import { Collection, ObjectId } from "mongodb";
 
 const rob = Roboto({ weight: ["500"], subsets: ["vietnamese"] });
 export default async function Customers() {
@@ -14,11 +15,12 @@ export default async function Customers() {
   const db = client.db("BusinessManager");
   const customers = db.collection("customers");
   const uniqueCustomers = customers.find({ userId: user.id });
+  const invoices = db.collection("invoices");
   const customersArray = await uniqueCustomers.toArray();
   return (
     <>
       <div
-        className={`bg-[#EBF4F6] flex flex-col gap-4 items-center w-full overflow-auto ${rob.className}`}
+        className={`bg-[#EBF4F6] flex flex-col gap-4 items-center justify-center lg:justify-normal md:justify-normal w-full overflow-auto ${rob.className}`}
       >
         <div className="p-4">
           <h3 className="text-2xl">Customers</h3>
@@ -63,17 +65,29 @@ export default async function Customers() {
   );
 }
 
-function CustomerTable({ name, email }: { name: string; email: string }) {
+async function CustomerTable({ name, email, id, invoices }: { name: string; email: string, id?:ObjectId, invoices?:Collection<InvoiceDoc>  }) {
+  let invoiceNumbers = 0;
+  const uniqueInvoices = invoices?.find({customerId:id});
+  const invoiceArray = await uniqueInvoices?.toArray();
+  if(uniqueInvoices){
+    invoiceNumbers = invoiceArray?.length ?? 0
+  }
   return (
     <tr className="even:bg-[#37B7C3]">
       <td className="tableData">{name}</td>
       <td className="tableData">{email}</td>
-      <td className="tableData">0</td>
+      <td className="tableData">{invoiceNumbers}</td>
     </tr>
   );
 }
 
-function CustomerCards({ name, email }: { name: string; email: string }){
+async function CustomerCards({ name, email, id, invoices }: { name: string; email: string, id?:ObjectId, invoices?:Collection<InvoiceDoc>  }){
+  let invoiceNumbers = 0;
+  const uniqueInvoices = invoices?.find({customerId:id});
+  const invoiceArray = await uniqueInvoices?.toArray();
+  if(uniqueInvoices){
+    invoiceNumbers = invoiceArray?.length ?? 0
+  }
   return (
     <div className="flex flex-col justify-evenly w-52 gap-2">
        <div className="border-b flex flex-col gap-1 p-2 border-gray-300">
@@ -81,8 +95,12 @@ function CustomerCards({ name, email }: { name: string; email: string }){
         <p>{email}</p>
        </div>
        <div className="border-b p-2 flex flex-col gap-1 border-gray-300">
-           0 invoices
+           {invoiceNumbers} invoices
        </div>
     </div>
   )
+}
+
+interface InvoiceDoc{
+  customerId: ObjectId
 }
