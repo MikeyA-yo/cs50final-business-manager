@@ -23,11 +23,10 @@ export default async function Customers() {
         className={`bg-[#EBF4F6] flex flex-col gap-4 items-center justify-center lg:justify-normal md:justify-normal w-full overflow-auto ${rob.className}`}
       >
         <div className="p-4">
-          <h3 className="text-2xl">Customers</h3>
+          <h3 className="text-3xl">Customers: </h3>
         </div>
         <CreateCustomer userID={user.id.toString()} />
         <div className="flex flex-col gap-2 items-center">
-          <h2 className="text-3xl">Customers</h2>
           <table className="lg:block md:block hidden">
             <tbody>
               {customersArray.length > 0 && (
@@ -44,6 +43,7 @@ export default async function Customers() {
                       name={customer.name ?? ""}
                       email={customer.email ?? ""}
                       key={i}
+                      invoices={invoices}
                     />
                   );
                 })}
@@ -52,7 +52,7 @@ export default async function Customers() {
           <div className="lg:hidden md:hidden flex flex-col items-center justify-evenly gap-2 p-4">
              {customersArray.map((customer, i)=>{
               return (
-                <CustomerCards name={customer.name ?? ""} email={customer.email ?? ""} key={i} />
+                <CustomerCards name={customer.name ?? ""} email={customer.email ?? ""} key={i} invoices={invoices} />
               )
              })}
           </div>
@@ -65,7 +65,7 @@ export default async function Customers() {
   );
 }
 
-async function CustomerTable({ name, email, id, invoices }: { name: string; email: string, id?:ObjectId, invoices?:Collection<InvoiceDoc>  }) {
+async function CustomerTable({ name, email, id, invoices }: { name: string; email: string, id?:ObjectId, invoices?:Collection<any>  }) {
   let invoiceNumbers = 0;
   const uniqueInvoices = invoices?.find({customerId:id});
   const invoiceArray = await uniqueInvoices?.toArray();
@@ -81,7 +81,7 @@ async function CustomerTable({ name, email, id, invoices }: { name: string; emai
   );
 }
 
-async function CustomerCards({ name, email, id, invoices }: { name: string; email: string, id?:ObjectId, invoices?:Collection<InvoiceDoc>  }){
+async function CustomerCards({ name, email, id, invoices }: { name: string; email: string, id?:ObjectId, invoices?:Collection<any>  }){
   let invoiceNumbers = 0;
   const uniqueInvoices = invoices?.find({customerId:id});
   const invoiceArray = await uniqueInvoices?.toArray();

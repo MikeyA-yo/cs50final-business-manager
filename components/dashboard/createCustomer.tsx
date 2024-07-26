@@ -11,6 +11,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
   const [email, setEmail] = useState("");
   const [errText, setErrText] = useState("Error Occured");
   const [err, setErr] = useState(false);
+  const [refresh, setRefresh]= useState(false)
   const router = useRouter()
   async function createCustomer(name: string, email: string) {
     const res = await fetch("/api/createcustomer", {
@@ -25,7 +26,8 @@ export default function CreateCustomer({ userID }: { userID: string }) {
     }
     setForm(false);
     if(res.ok && !msg.error){
-      router.refresh()
+      setRefresh(true)
+      return 
     }
   }
   return (
@@ -66,6 +68,11 @@ export default function CreateCustomer({ userID }: { userID: string }) {
               </button>
             </form>
           </div>
+        )}
+        {refresh && (
+          <>
+            <p>Refresh The page to see effect</p>
+          </>
         )}
       </div>
     </>
