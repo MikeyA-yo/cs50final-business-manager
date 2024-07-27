@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Invoice } from "../someSvgs";
 
-export default function CreateInvoice({ id }: { id: string }) {
+export default function CreateInvoice({ id, customers }: { id: string, customers:any[] }) {
     const [form, setForm] = useState(false)
   return (
     <>
@@ -14,6 +14,14 @@ export default function CreateInvoice({ id }: { id: string }) {
             <>
               <div>
                 <p>Select a Customer</p>
+                <select>
+                    <option disabled>Select Customer</option>
+                    {customers.map((customer, i)=>{
+                        return (
+                            <option key={i} value={customer.id}>{customer.name}</option>
+                        )
+                    })}
+                </select>
               </div>
             </>
         )}
