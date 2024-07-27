@@ -12,7 +12,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
   const [errText, setErrText] = useState("Error Occured");
   const [err, setErr] = useState(false);
   const [refresh, setRefresh]= useState(false)
-  const router = useRouter()
+ // const router = useRouter()
   async function createCustomer(name: string, email: string) {
     const res = await fetch("/api/createcustomer", {
       method: "POST",

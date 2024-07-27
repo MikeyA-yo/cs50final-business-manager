@@ -49,7 +49,7 @@ export default async function Customers() {
                 })}
             </tbody>
           </table>
-          <div className="lg:hidden md:hidden flex flex-col items-center justify-evenly gap-2 p-4">
+          <div className="lg:hidden md:hidden flex flex-col justify-evenly gap-2 p-4">
              {customersArray.map((customer, i)=>{
               return (
                 <CustomerCards name={customer.name ?? ""} email={customer.email ?? ""} key={i} invoices={invoices} />
@@ -89,7 +89,7 @@ async function CustomerCards({ name, email, id, invoices }: { name: string; emai
     invoiceNumbers = invoiceArray?.length ?? 0
   }
   return (
-    <div className="flex flex-col justify-evenly w-52 gap-2">
+    <div className="flex flex-col justify-evenly w-auto gap-2">
        <div className="border-b flex flex-col gap-1 p-2 border-gray-300">
         <p>{name}</p>
         <p>{email}</p>
