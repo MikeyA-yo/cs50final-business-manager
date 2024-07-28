@@ -54,7 +54,7 @@ export default async function Customers() {
           <div className="lg:hidden md:hidden flex flex-col justify-evenly gap-2 p-4">
              {customersArray.map((customer, i)=>{
               return (
-                <CustomerCards name={customer.name ?? ""} email={customer.email ?? ""} key={i} invoices={invoices} />
+                <CustomerCards name={customer.name ?? ""} email={customer.email ?? ""} key={i} id={user.id} invoices={invoices} customers={customers}/>
               )
              })}
           </div>
@@ -84,9 +84,10 @@ async function CustomerTable({ name, email, id, invoices, customers }: { name: s
   );
 }
 
-async function CustomerCards({ name, email, id, invoices }: { name: string; email: string, id?:ObjectId, invoices?:Collection<any>  }){
+async function CustomerCards({ name, email, id, invoices, customers }: { name: string; email: string, id:ObjectId, invoices:Collection<any>, customers:Collection<any>   }){
   let invoiceNumbers = 0;
-  const uniqueInvoices = invoices?.find({customerId:id});
+  const customer = await customers?.findOne({userId: id, name:name, email:email})
+  const uniqueInvoices = invoices?.find({customerId:customer?._id});
   const invoiceArray = await uniqueInvoices?.toArray();
   if(uniqueInvoices){
     invoiceNumbers = invoiceArray?.length ?? 0
