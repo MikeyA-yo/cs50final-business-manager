@@ -43,7 +43,9 @@ export default async function Customers() {
                       name={customer.name ?? ""}
                       email={customer.email ?? ""}
                       key={i}
+                      id={user.id}
                       invoices={invoices}
+                      customers={customers}
                     />
                   );
                 })}
@@ -65,9 +67,10 @@ export default async function Customers() {
   );
 }
 
-async function CustomerTable({ name, email, id, invoices }: { name: string; email: string, id?:ObjectId, invoices?:Collection<any>  }) {
+async function CustomerTable({ name, email, id, invoices, customers }: { name: string; email: string, id:ObjectId, invoices:Collection<any>, customers:Collection<any>  }) {
   let invoiceNumbers = 0;
-  const uniqueInvoices = invoices?.find({customerId:id});
+  const customer = await customers?.findOne({userId: id, name:name, email:email})
+  const uniqueInvoices = invoices?.find({customerId:customer?._id});
   const invoiceArray = await uniqueInvoices?.toArray();
   if(uniqueInvoices){
     invoiceNumbers = invoiceArray?.length ?? 0

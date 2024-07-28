@@ -24,7 +24,7 @@ export async function POST(req:Request){
 export async function GET(req:NextRequest){
     const {searchParams} = new URL(req.url);
     if (!searchParams.get("id")){
-       return 
+       return NextResponse.json({error:"Wrong Usage"})
     }
     const ID = new ObjectId(searchParams.get("id") as string)
     const client = await clientPromise;
