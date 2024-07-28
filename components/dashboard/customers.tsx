@@ -104,7 +104,3 @@ async function CustomerCards({ name, email, id, invoices, customers }: { name: s
     </div>
   )
 }
-
-interface InvoiceDoc{
-  customerId: ObjectId
-}

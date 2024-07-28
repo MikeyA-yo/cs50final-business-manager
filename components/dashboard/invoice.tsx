@@ -30,7 +30,7 @@ export default async function Invoices() {
           <h3 className="text-2xl">Invoices</h3>
         </div>
         <CreateInvoice id={ID} customers={customers} />
-        <div>
+        <div className="flex flex-col gap-2 items-center">
           <table className="lg:block md:block hidden">
             <tbody>
               {j.length > 0 && (
@@ -47,6 +47,7 @@ export default async function Invoices() {
                   <InvoiceTable data={data} key={i} />
                 )
               })}
+              {j.length === 0 && <h3>No Invoices here</h3>}
             </tbody>
           </table>
             

@@ -47,7 +47,7 @@ export default function CreateInvoice({
     <>
       <div className="flex flex-col items-center justify-center gap-2">
         {err && <Err message={errText} onClick={()=>setErr(false)}/>}
-            {comp && <Comp message={compText} onClick={()=>setComp(false)} />}
+        {comp && <Comp message={compText} onClick={()=>setComp(false)} />}
         <p
           className="flex gap-2 cursor-pointer bg-[#088395] p-2 rounded"
           onClick={() => setForm(!form)}

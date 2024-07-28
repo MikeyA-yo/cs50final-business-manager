@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { UserPlus } from "../someSvgs";
-import { Err } from "../utilComps";
+import { Comp, Err } from "../utilComps";
 import { useRouter } from "next/navigation";
 
 export default function CreateCustomer({ userID }: { userID: string }) {
@@ -12,6 +12,8 @@ export default function CreateCustomer({ userID }: { userID: string }) {
   const [errText, setErrText] = useState("Error Occured");
   const [err, setErr] = useState(false);
   const [refresh, setRefresh]= useState(false)
+  const [compText, setCompText] = useState("Created Customer");
+  const [comp, setComp] = useState(false);;
  // const router = useRouter()
   async function createCustomer(name: string, email: string) {
     const res = await fetch("/api/createcustomer", {
@@ -26,6 +28,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
     }
     setForm(false);
     if(res.ok && !msg.error){
+      setComp(true)
       setRefresh(true)
       return 
     }
@@ -34,6 +37,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
     <>
       <div className="flex flex-col items-center justify-center gap-2 bg-[#088395] p-2 rounded">
         {err && <Err message={errText} onClick={() => setErr(false)} />}
+        {comp && <Comp message={compText} onClick={()=>setComp(false)} />}
         <p className="flex gap-2 cursor-pointer" onClick={() => setForm(!form)}>
           Create Customer <UserPlus className="size-6" />
         </p>
@@ -44,7 +48,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
               <input
                 type="text"
                 required
-                placeholder="Your Name"
+                placeholder="Customer's Name"
                 className="p-2"
                 onChange={(e) => setName(e.target.value)}
               />
