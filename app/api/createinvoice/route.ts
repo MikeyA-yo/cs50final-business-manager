@@ -56,7 +56,7 @@ export async function GET(req:NextRequest){
     return NextResponse.json(invoiceData);
 }
 
-interface InvoiceData{
+export interface InvoiceData{
     amount:number,
     status:"pending" | "paid",
     customerEmail:string,

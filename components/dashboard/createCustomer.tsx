@@ -44,11 +44,15 @@ export default function CreateCustomer({ userID }: { userID: string }) {
               <input
                 type="text"
                 required
+                placeholder="Your Name"
+                className="p-2"
                 onChange={(e) => setName(e.target.value)}
               />
               <p>Email: </p>
               <input
+               className="p-2"
                 type="email"
+                placeholder="abc@xyz.com"
                 required
                 onChange={(e) => setEmail(e.target.value)}
               />

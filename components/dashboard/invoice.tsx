@@ -3,6 +3,7 @@ import { Ubuntu } from "next/font/google";
 import { redirect } from "next/navigation";
 import CreateInvoice from "./createInvoice";
 import { clientPromise } from "@/app/api/mongodb";
+import { InvoiceData } from "@/app/api/createinvoice/route";
 
 const ubuntu = Ubuntu({weight:["500"], subsets:["latin-ext"]})
 export default async function Invoices() {
@@ -36,3 +37,6 @@ export default async function Invoices() {
     </>
   );
 }
+
+async function InvoiceTable(data:InvoiceData){}
+async function InvoiceCard(data:InvoiceData){}
