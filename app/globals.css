@@ -16,12 +16,12 @@
   }
 }
 
-
 .input-container {
   position: relative;
 }
 
-.input-container input, .form button {
+.input-container input,
+.form button {
   outline: none;
 }
 
@@ -124,7 +124,7 @@
   bottom: 0;
   background-color: #fff;
   border: 1px solid #adb5bd;
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 30px;
 }
 
@@ -137,16 +137,16 @@
   left: 0.27em;
   bottom: 0.25em;
   background-color: #adb5bd;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #007bff;
-  border: 1px solid #007bff;
+  background-color: #071952;
+  border: 1px solid #071952;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #007bff;
+  box-shadow: 0 0 1px #071952;
 }
 
 input:checked + .slider:before {
@@ -154,12 +154,11 @@ input:checked + .slider:before {
   background-color: #fff;
 }
 
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-  .tableData{
-    @apply py-2 px-4 border-b border-gray-300
+  .tableData {
+    @apply py-2 px-4 border-b border-gray-300;
   }
 }

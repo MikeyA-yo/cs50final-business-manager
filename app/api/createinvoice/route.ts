@@ -36,7 +36,7 @@ export async function GET(req:NextRequest){
     if (!user){
         return NextResponse.json({error:"No user"})
     }
-    const invoicesUnique = invoices.find({_id: ID});
+    const invoicesUnique = invoices.find({userId: ID});
     const invoiceArray = await invoicesUnique.toArray();
     let invoiceData:InvoiceData[] = [];
     for (let i = 0; i < invoiceArray.length; i++){

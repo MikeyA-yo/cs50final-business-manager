@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Invoice } from "../someSvgs";
 import { InvoiceData } from "@/app/api/createinvoice/route";
+import { Comp, Err } from "../utilComps";
 
 export default function CreateInvoice({
   id,
@@ -14,6 +15,10 @@ export default function CreateInvoice({
   const [customerValue, setCustomerValue] = useState("");
   const [amount, setAmount] = useState(0);
   const [status, setStatus] = useState<"pending" | "paid">("pending");
+  const [err, setErr] = useState(false);
+  const [comp, setComp] = useState(false);
+  const [errText, setErrText] = useState("Something went wrong");
+  const [compText, setCompText] = useState("Created Invoice")
   type InvoiceCreation = Pick<InvoiceData, "amount" | "status">;
   interface Invoice extends InvoiceCreation {
     userID: string;
@@ -24,14 +29,25 @@ export default function CreateInvoice({
       const res = await fetch("/api/createinvoice", {
         method: "POST",
         body: JSON.stringify(data),
-        next: { revalidate: 10 },
       });
       const json = await res.json();
-    } catch (e) {}
+      if (json.error){
+        setErr(true);
+        setErrText(json.error);
+        return
+      }
+      setForm(false);
+      setComp(true);
+
+    } catch (e) {
+        setErr(true)
+    }
   }
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2">
+        {err && <Err message={errText} onClick={()=>setErr(false)}/>}
+            {comp && <Comp message={compText} onClick={()=>setComp(false)} />}
         <p
           className="flex gap-2 cursor-pointer bg-[#088395] p-2 rounded"
           onClick={() => setForm(!form)}
@@ -49,6 +65,11 @@ export default function CreateInvoice({
                   userID: id,
                   customerID: customerValue,
                 };
+                if(customerValue.length < 6){
+                    setErr(true);
+                    setErrText("Customer not provided")
+                    return;
+                }
                 Create(data);
               }}
             >
@@ -59,8 +80,9 @@ export default function CreateInvoice({
                   onChange={(e) => {
                     setCustomerValue(e.target.value);
                   }}
+                  required
                 >
-                  <option disabled>Select Customer</option>
+                  <option disabled selected>Select Customer</option>
                   {customers.map((customer, i) => {
                     return (
                       <option key={i} value={customer.id}>
@@ -76,14 +98,39 @@ export default function CreateInvoice({
                   onChange={(e) => {
                     setAmount(parseInt(e.target.value));
                   }}
+                  required
                 />
                 <div>
+                  <p className="text-center">Paid ?</p>
                   <label className="switch">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setStatus("paid");
+                        } else {
+                          setStatus("pending");
+                        }
+                      }}
+                      required
+                    />
                     <span className="slider" />
                   </label>
                 </div>
-                <button type="submit" className="bg-[#EBF4F6] p-2 rounded">
+                <button type="submit" onClick={()=>{
+                    let data = {
+                        amount,
+                        status,
+                        userID: id,
+                        customerID: customerValue,
+                      };
+                      if(customerValue.length < 6){
+                          setErr(true);
+                          setErrText("Customer not provided")
+                          return;
+                      }
+                      Create(data);
+                }} className="bg-[#EBF4F6] p-2 rounded">
                   Create Invoice
                 </button>
               </div>
@@ -94,3 +141,4 @@ export default function CreateInvoice({
     </>
   );
 }
+//ptoentially good input class: bg-inherit outline-none border-b border-b-[#EBF4F6]
