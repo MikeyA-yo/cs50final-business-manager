@@ -28,7 +28,7 @@ export default async function Invoices() {
   const ID = user.id.toString()
   const res = await fetch(`http://localhost:3000/api/createinvoice?id=${ID}`, {next:{revalidate:10}});
   const j:InvoiceData[] = await res.json();
-  const sign = buisness.currency === "naira" ? "₦" : "$"
+  const sign = buisness.currency === "naira" ? "₦" : "$";
   return (
     <>
       <div className={`flex flex-col items-center justify-center lg:justify-normal gap-4 w-full bg-[#EBF4F6] overflow-auto ${ubuntu.className}`}>
