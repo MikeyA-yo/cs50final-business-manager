@@ -59,18 +59,11 @@ export default function CreateInvoice({
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                let data = {
-                  amount,
-                  status,
-                  userID: id,
-                  customerID: customerValue,
-                };
                 if(customerValue.length < 6){
                     setErr(true);
                     setErrText("Customer not provided")
                     return;
                 }
-                Create(data);
               }}
             >
               <div className="flex flex-col bg-[#37B7C3] p-4  gap-2 items-center">
