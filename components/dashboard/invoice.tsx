@@ -14,6 +14,11 @@ export default async function Invoices() {
   const client = await clientPromise;
   const db = client.db("BusinessManager");
   const customerCol = db.collection("customers");
+  const businesses = db.collection("businesses")
+  const buisness = await businesses.findOne({userId:user.id.toString()});
+  if(!buisness){
+    return redirect("/register")
+  }
   const customers = (await customerCol.find({userId:user.id}).toArray()).map((c)=> ({
      name:c.name,
      email:c.email,
@@ -23,6 +28,7 @@ export default async function Invoices() {
   const ID = user.id.toString()
   const res = await fetch(`http://localhost:3000/api/createinvoice?id=${ID}`, {next:{revalidate:10}});
   const j:InvoiceData[] = await res.json();
+  const sign = buisness.currency === "naira" ? "₦" : "$"
   return (
     <>
       <div className={`flex flex-col items-center justify-center lg:justify-normal gap-4 w-full bg-[#EBF4F6] overflow-auto ${ubuntu.className}`}>
@@ -37,7 +43,7 @@ export default async function Invoices() {
                 <tr>
                   <th>Customer</th>
                   <th>Email</th>
-                  <th>Amount</th>
+                  <th>Amount ({sign})</th>
                   <th>Date</th>
                   <th>Status</th>
                 </tr>
