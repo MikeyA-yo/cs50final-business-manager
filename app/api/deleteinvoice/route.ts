@@ -15,7 +15,7 @@ export async function GET(req:Request){
      return new Response(null, {
           status:307,
           headers:{
-               Location:"/dashboard"
+               Location:"/dashboard/invoices"
           }
      });
 }
