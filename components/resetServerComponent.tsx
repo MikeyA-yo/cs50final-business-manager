@@ -11,7 +11,7 @@ export default async function ResetPass(){
        const users = db.collection("users");
        const userP = await users.findOne({_id:user.id});
        if(userP && !userP.hashedPassword){
-        return redirect("/")
+        return redirect("/dashboard")
        }
     }
     return <ResetPassword />

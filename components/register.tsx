@@ -9,7 +9,7 @@ const open = Open_Sans({ weight: ["600"], subsets: ["hebrew"] });
 export default async function Register() {
   const { user } = await auth();
   if(!user){
-    return redirect("/")
+    return redirect("/login")
   }
   let userId = "";
   if (user) {
@@ -69,7 +69,7 @@ export default async function Register() {
 export async function RegisterMobile() {
   const { user } = await auth();
   if(!user){
-    return redirect("/")
+    return redirect("/login")
   }
   let userId = "";
   if (user) {

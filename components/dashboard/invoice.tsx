@@ -4,7 +4,9 @@ import { redirect } from "next/navigation";
 import CreateInvoice from "./createInvoice";
 import { clientPromise } from "@/app/api/mongodb";
 import { InvoiceData } from "@/app/api/createinvoice/route";
-import { Delete, Edit } from "../someSvgs";
+import { Clock, Delete, Edit, Tick } from "../someSvgs";
+import { Collection } from "mongodb";
+import Link from "next/link";
 
 const ubuntu = Ubuntu({ weight: ["500"], subsets: ["latin-ext"] });
 export default async function Invoices() {
@@ -16,6 +18,7 @@ export default async function Invoices() {
   const db = client.db("BusinessManager");
   const customerCol = db.collection("customers");
   const businesses = db.collection("businesses");
+  const invoices = db.collection("invoices");
   const buisness = await businesses.findOne({ userId: user.id.toString() });
   if (!buisness) {
     return redirect("/register");
@@ -56,7 +59,7 @@ export default async function Invoices() {
                 </tr>
               )}
               {j.length > 0 &&
-                j.map((data, i) => {
+                j.toReversed().map((data, i) => {
                   return <InvoiceTable data={data} key={i} />;
                 })}
             </tbody>
@@ -64,7 +67,7 @@ export default async function Invoices() {
           {j.length === 0 && <h3>No Invoices here</h3>}
           <div className="lg:hidden md:hidden flex flex-col justify-center bg-[#088395] gap-2 p-2 rounded">
             {j.length > 0 &&
-              j.map((data, i) => {
+              j.toReversed().map((data, i) => {
                 return <InvoiceCard data={data} key={i} sign={sign} />;
               })}
           </div>
@@ -74,14 +77,20 @@ export default async function Invoices() {
   );
 }
 
-async function InvoiceTable({ data }: { data: InvoiceData }) {
+async function InvoiceTable({ data}: { data: InvoiceData }) {
+
   return (
     <tr className="even:bg-[#37B7C3]">
       <td className="tableData">{data.customer}</td>
       <td className="tableData">{data.customerEmail}</td>
       <td className="tableData">{data.amount}</td>
       <td className="tableData">{data.createDate}</td>
-      <td className="tableData">{data.status}</td>
+      <td className="tableData">{data.status} {data.status === "paid" ? <Tick className="size-6" /> : <Clock className="size-6" />}</td>
+      <td className="items-center justify-center py-2 px-4  flex gap-1"><Edit className="size-8 p-1 border-2 rounded" />
+      <Link href={{
+        pathname:"/api/deleteinvoice",
+        query:{id:data.id}
+      }}><Delete className="size-8 p-1 border-2 rounded" /></Link></td>
     </tr>
   );
 }

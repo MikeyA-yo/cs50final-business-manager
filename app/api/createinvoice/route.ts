@@ -49,7 +49,8 @@ export async function GET(req:NextRequest){
             status:invoiceArray[i].status,
             createDate: invoiceArray[i].createDate,
             customer:customer.name,
-            customerEmail: customer.email
+            customerEmail: customer.email,
+            id:invoiceArray[i]._id.toString()
            }
            invoiceData.push(data)
     }
@@ -61,5 +62,6 @@ export interface InvoiceData{
     status:"pending" | "paid",
     customerEmail:string,
     customer:string,
-    createDate:string
+    createDate:string,
+    id:string
 }
