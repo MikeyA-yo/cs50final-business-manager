@@ -4,6 +4,7 @@ import { useState } from "react";
 import { UserPlus } from "../someSvgs";
 import { Comp, Err } from "../utilComps";
 import { useRouter } from "next/navigation";
+import { revalidate } from "./actions";
 
 export default function CreateCustomer({ userID }: { userID: string }) {
   const [form, setForm] = useState(false);
@@ -13,8 +14,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
   const [err, setErr] = useState(false);
   const [refresh, setRefresh]= useState(false)
   const [compText, setCompText] = useState("Created Customer");
-  const [comp, setComp] = useState(false);;
- // const router = useRouter()
+  const [comp, setComp] = useState(false);
   async function createCustomer(name: string, email: string) {
     const res = await fetch("/api/createcustomer", {
       method: "POST",
@@ -28,8 +28,8 @@ export default function CreateCustomer({ userID }: { userID: string }) {
     }
     setForm(false);
     if(res.ok && !msg.error){
+      revalidate()
       setComp(true)
-      setRefresh(true)
       return 
     }
   }
@@ -43,7 +43,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
         </p>
         {form && (
           <div className="flex flex-col gap-1">
-            <form className="flex flex-col gap-1">
+            <form className="flex flex-col gap-1" onSubmit={(e)=>{e.preventDefault()}}>
               <p>Name: </p>
               <input
                 type="text"
@@ -76,11 +76,6 @@ export default function CreateCustomer({ userID }: { userID: string }) {
               </button>
             </form>
           </div>
-        )}
-        {refresh && (
-          <>
-            <p>Refresh The page to see effect</p>
-          </>
         )}
       </div>
     </>

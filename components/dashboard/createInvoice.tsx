@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Invoice } from "../someSvgs";
 import { InvoiceData } from "@/app/api/createinvoice/route";
 import { Comp, Err } from "../utilComps";
+import { revalidate } from "./actions";
 
 export default function CreateInvoice({
   id,
@@ -36,9 +37,9 @@ export default function CreateInvoice({
         setErrText(json.error);
         return
       }
+      revalidate();
       setForm(false);
       setComp(true);
-
     } catch (e) {
         setErr(true)
     }

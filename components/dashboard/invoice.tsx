@@ -91,7 +91,7 @@ async function InvoiceTable({ data }: { data: InvoiceData }) {
         )}
       </td>
       <td className="items-center justify-center py-2 px-4  flex gap-1">
-        <Edit className="size-8 p-1 border-2 rounded" />
+        <Link href={`/dashboard/invoices/${data.id}/edit`}><Edit className="size-8 p-1 border-2 rounded" /></Link>
         <Link
           href={{
             pathname: "/api/deleteinvoice",
