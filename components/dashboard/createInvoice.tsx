@@ -147,7 +147,7 @@ export function DeleteInvoice({id}:{id:string}){
     revalidate()
   }
   return (
-    <div onClick={()=>{
+    <div className="cursor-pointer" onClick={()=>{
       deleteInvoice()
     }}>
       <Delete className="size-8 p-1 border-2 rounded" />

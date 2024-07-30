@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { UserPlus } from "../someSvgs";
+import { Delete, UserPlus } from "../someSvgs";
 import { Comp, Err } from "../utilComps";
 import { useRouter } from "next/navigation";
 import { revalidate } from "./actions";
@@ -81,3 +81,24 @@ export default function CreateCustomer({ userID }: { userID: string }) {
     </>
   );
 }
+ export function DeleteCustomer({id}:{id:string}){
+  async function deleteCustomer() {
+    const res = await fetch(`/api/deletecustomer`,{
+      method:"POST",
+      body:JSON.stringify({id})
+    });
+    const json = await res.json();
+     if(json.error){
+      alert(json.error)
+      return
+     }
+    revalidate()
+  }
+  return (
+    <div className="cursor-pointer" onClick={()=>{
+      deleteCustomer();
+    }}>
+      <Delete className="size-8 p-1 border-2 rounded" />
+    </div>
+  )
+ }

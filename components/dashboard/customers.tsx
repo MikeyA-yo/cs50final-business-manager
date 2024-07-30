@@ -1,5 +1,5 @@
 import { Roboto } from "next/font/google";
-import CreateCustomer from "./createCustomer";
+import CreateCustomer, { DeleteCustomer } from "./createCustomer";
 import { auth } from "@/app/api/auth/auth";
 import { redirect } from "next/navigation";
 import { clientPromise } from "@/app/api/mongodb";
@@ -77,7 +77,7 @@ export default async function Customers() {
 
 async function CustomerTable({ name, email, id, invoices, customers }: { name: string; email: string, id:ObjectId, invoices:Collection<any>, customers:Collection<any>  }) {
   let invoiceNumbers = 0;
-  const customer = await customers?.findOne({userId: id, name:name, email:email})
+  const customer = await customers.findOne({userId: id, name:name, email:email})
   const uniqueInvoices = invoices?.find({customerId:customer?._id});
   const invoiceArray = await uniqueInvoices?.toArray();
   if(uniqueInvoices){
@@ -99,6 +99,7 @@ async function CustomerTable({ name, email, id, invoices, customers }: { name: s
       <td className="tableData">{invoiceNumbers}</td>
       <td className="tableData">{totalPending}</td>
       <td className="tableData">{totalPaid}</td>
+      <td className="tableData"><DeleteCustomer  id={customer?._id.toString()}/></td>
     </tr>
   );
 }
