@@ -12,10 +12,11 @@ export async function GET(req:Request){
      const db = client.db("BusinessManager");
      const invoices = db.collection("invoices");
      await invoices.deleteOne({_id:id});
-     return new Response(null, {
-          status:307,
-          headers:{
-               Location:"/dashboard/invoices"
-          }
-     });
+     return NextResponse.json({});
 }
+// new Response(null, {
+//      status:307,
+//      headers:{
+//           Location:"/dashboard/invoices"
+//      }
+// });

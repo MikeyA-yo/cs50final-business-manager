@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Invoice } from "../someSvgs";
+import { Delete, Invoice } from "../someSvgs";
 import { InvoiceData } from "@/app/api/createinvoice/route";
 import { Comp, Err } from "../utilComps";
 import { revalidate } from "./actions";
@@ -136,3 +136,21 @@ export default function CreateInvoice({
   );
 }
 //ptoentially good input class: bg-inherit outline-none border-b border-b-[#EBF4F6]
+export function DeleteInvoice({id}:{id:string}){
+  async function deleteInvoice(){
+    const res = await fetch(`http://localhost:3000/api/deleteinvoice?id=${id}`);
+    const json = await res.json();
+     if(json.error){
+      alert(json.error)
+      return
+     }
+    revalidate()
+  }
+  return (
+    <div onClick={()=>{
+      deleteInvoice()
+    }}>
+      <Delete className="size-8 p-1 border-2 rounded" />
+    </div>
+  )
+}
