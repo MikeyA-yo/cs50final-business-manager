@@ -16,10 +16,16 @@ export async function POST(req:Request){
 
 export async function PUT(req:Request){
     const {id, amount, status} = await req.json();
+    if(!id || !amount || !status){
+        return NextResponse.json({error:"Incomplete fields"})
+    }
     const client = await clientPromise;
     const db = client.db("BusinessManager");
     const invoices = db.collection("invoices");
-    const invoice = await invoices.updateOne({_id: new ObjectId(id as string)}, {});
+    const invoice = await invoices.updateOne({_id: new ObjectId(id as string)}, {$set:{
+        amount:parseInt(amount),
+        status:status
+    }});
     
     return NextResponse.json(invoice)
 }

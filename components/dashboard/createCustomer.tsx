@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Delete, UserPlus } from "../someSvgs";
+import { Delete, Spinner, UserPlus } from "../someSvgs";
 import { Comp, Err } from "../utilComps";
 import { useRouter } from "next/navigation";
 import { revalidate } from "./actions";
@@ -82,12 +82,15 @@ export default function CreateCustomer({ userID }: { userID: string }) {
   );
 }
  export function DeleteCustomer({id}:{id:string}){
+  const [load, setLoad] = useState(false)
   async function deleteCustomer() {
+    setLoad(true)
     const res = await fetch(`/api/deletecustomer`,{
       method:"POST",
       body:JSON.stringify({id})
     });
     const json = await res.json();
+    setLoad(false)
      if(json.error){
       alert(json.error)
       return
@@ -99,6 +102,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
       deleteCustomer();
     }}>
       <Delete className="size-8 p-1 border-2 rounded" />
+      {load && <Spinner className="animate-spin size-8" />}
     </div>
   )
  }
