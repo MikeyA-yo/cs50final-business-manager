@@ -8,9 +8,8 @@ import GmailLogin from "./gmailLogin";
 const inter = Inter({ weight: ["500"], subsets: ["vietnamese"] });
 export default async function Login() {
   const { user } = await auth();
-  console.log(user);
   if (user) {
-    redirect("/");
+    redirect("/dashboard");
   }
   return (
     <>
