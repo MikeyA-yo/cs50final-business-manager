@@ -62,7 +62,7 @@ export default async function Invoices() {
                 })}
             </tbody>
           </table>
-          {j.length === 0 && <h3>No Invoices here</h3>}
+          {j.length === 0 && <h3>No Invoices here, create one to see them appear</h3>}
           <div className="lg:hidden md:hidden flex flex-col justify-center bg-[#088395] gap-2 p-2 rounded">
             {j.length > 0 &&
               j.toReversed().map((data, i) => {

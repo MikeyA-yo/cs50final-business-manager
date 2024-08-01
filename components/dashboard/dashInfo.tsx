@@ -38,7 +38,7 @@ export default async function Infos() {
   ];
   return (
     <>
-      <div className="flex lg:flex-row flex-col gap-2 py-4 lg:w-full justify-evenly">
+      <div className="flex lg:flex-row md:flex-row flex-wrap flex-col gap-2 py-4 lg:w-full justify-evenly">
         {data.map((a, i) => {
           return <InfoCard header={a.header} amount={a.amount} key={i} sign={sign} />;
         })}

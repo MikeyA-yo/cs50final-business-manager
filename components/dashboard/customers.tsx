@@ -67,7 +67,7 @@ export default async function Customers() {
              })}
           </div>
           {customersArray.length === 0 && (
-            <h3>No Customers Yet, create one to see them appear</h3>
+            <h3>No Customers yet, create one to see them appear</h3>
           )}
         </div>
       </div>

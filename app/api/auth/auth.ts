@@ -88,11 +88,13 @@ interface UserDoc {
   _id: ObjectId;
   name: string;
   email: string;
+  image:string;
 }
 interface DatabaseUserAttributes {
   _id: ObjectId;
   name: string;
   email: string;
+  image:string;
 }
 
 // interface DatabaseSessionAttributes {

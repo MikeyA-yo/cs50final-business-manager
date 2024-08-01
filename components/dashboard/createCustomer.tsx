@@ -101,7 +101,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
     <div className="cursor-pointer" onClick={()=>{
       deleteCustomer();
     }}>
-      <Delete className="size-8 p-1 border-2 rounded" />
+      {!load && <Delete className="size-8 p-1 border-2 rounded" />}
       {load && <Spinner className="animate-spin size-8" />}
     </div>
   )

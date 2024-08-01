@@ -15,9 +15,13 @@ export default async function DashboardLayout({
     if(!user){
       return redirect("/login")
     }
+    const userP = {
+      name:user.name,
+      image: user.image
+    }
     return (
       <section className="flex min-h-screen w-full">
-        <SideNav />
+        <SideNav userProps={userP} />
         {children}
       </section>
     )
