@@ -15,7 +15,7 @@ export default function SideNav({userProps}:{userProps:{name:string, image:strin
         <div className="nav-dash flex gap-6 flex-col ">
           <div className="bg-[#37B7C3] rounded-lg p-2 flex flex-col gap-2">
             <Link href={`/dashboard/settings`} className=" flex flex-col gap-2">
-            <h3 className="flex gap-1">Settings <Gear className="size-6" /></h3>
+            <h3 className="flex gap-1 justify-between">Settings <Gear className="size-6" /></h3>
             <p className="flex gap-1">{userProps.name} <Image src={userProps.image} alt="Image of you" height={45} width={45} className="rounded-full" /></p>
             </Link>
           </div>
@@ -104,7 +104,7 @@ function MobileNav({
           <div className="flex flex-col pt-1 gap-6">
           <div className="bg-[#37B7C3] rounded-lg p-2 flex flex-col gap-2">
             <Link href={`/dashboard/settings`} className=" flex flex-col gap-2">
-            <h3 className="flex gap-1">Settings <Gear className="size-6" /></h3>
+            <h3 className="flex gap-1 justify-between">Settings <Gear className="size-6" /></h3>
             <p className="flex gap-1">{userProps.name} <Image src={userProps.image} alt="Image of you" height={45} width={45} className="rounded-full" /></p>
             </Link>
           </div>
