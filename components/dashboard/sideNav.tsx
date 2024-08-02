@@ -13,7 +13,7 @@ export default function SideNav({userProps}:{userProps:{name:string, image:strin
     <>
       <div className="lg:flex md:flex hidden flex-col min-h-screen bg-[#071952] p-8 items-center justify-between">
         <div className="nav-dash flex gap-6 flex-col ">
-          <div className="bg-[#37B7C3] rounded-lg p-2 flex flex-col gap-2">
+          <div className={`bg-[#${pathname === "/dashboard/settings"?"EBF4F6":"37B7C3"}] rounded-lg p-2 flex flex-col gap-2`}>
             <Link href={`/dashboard/settings`} className=" flex flex-col gap-2">
             <h3 className="flex gap-1 justify-between">Settings <Gear className="size-6" /></h3>
             <p className="flex gap-1">{userProps.name} <Image src={userProps.image} alt="Image of you" height={45} width={45} className="rounded-full" /></p>
@@ -102,7 +102,7 @@ function MobileNav({
             <XMark />
           </div>
           <div className="flex flex-col pt-1 gap-6">
-          <div className="bg-[#37B7C3] rounded-lg p-2 flex flex-col gap-2">
+          <div className={`bg-[#${pathname === "/dashboard/settings"?"EBF4F6":"37B7C3"}] ${pathname === "/dashboard/settings"?"text-black":""} rounded-lg p-2 flex flex-col gap-2`}>
             <Link href={`/dashboard/settings`} className=" flex flex-col gap-2">
             <h3 className="flex gap-1 justify-between">Settings <Gear className="size-6" /></h3>
             <p className="flex gap-1">{userProps.name} <Image src={userProps.image} alt="Image of you" height={45} width={45} className="rounded-full" /></p>
