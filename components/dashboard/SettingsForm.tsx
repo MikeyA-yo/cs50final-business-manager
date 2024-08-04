@@ -10,7 +10,9 @@ export function CapitalForm({userId}:{userId:string}){
         body:JSON.stringify({capital, userId})
       })
       const json = await res.json();
-
+      if(json.error){
+        return;
+      }
     }
     return (
         <>
