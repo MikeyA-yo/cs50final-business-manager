@@ -1,5 +1,5 @@
 import { clientPromise } from "@/app/api/mongodb";
-import { CapitalForm } from "./SettingsForm";
+import { CapitalForm, PercentForm } from "./SettingsForm";
 import { auth } from "@/app/api/auth/auth";
 
 export default async function Settings(){
@@ -17,14 +17,19 @@ export default async function Settings(){
     const sign = business.currency === "naira" ? "₦" : "$";
     return (
         <>
-         <div className="flex w-full flex-col items-center gap-4 pt-4">
+         <div className="flex w-full flex-col items-center justify-evenly gap-4 pt-4">
              <div>
                 <h2 className="text-2xl">Business Settings</h2>
              </div>
-             <div className="flex flex-col items-center justify-center gap-1">
+             <div className="flex flex-col items-center justify-center text-center gap-1 p-4">
                 <h3 className="text-xl">Capital and Expenses Settings ({sign})</h3>
                 <p>Add your total business capital and expense used a week, for profit generation</p>
                 <CapitalForm userId={user.id.toString()} />
+             </div>
+             <div className="flex flex-col items-center justify-center gap-1 text-center p-4">
+                <h3>Profit percentage expectations:</h3>
+                <p>Add how much percentage of your profit from capital you intend to make.</p>
+                <PercentForm userId={user.id.toString()} />
              </div>
          </div>
         </>
