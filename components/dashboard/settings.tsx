@@ -27,8 +27,8 @@ export default async function Settings(){
                 <CapitalForm userId={user.id.toString()} />
              </div>
              <div className="flex flex-col items-center justify-center gap-1 text-center p-4">
-                <h3>Profit percentage expectations:</h3>
-                <p>Add how much percentage of your profit from capital you intend to make.</p>
+                <h3 className="text-xl">Pay Cycle:</h3>
+                <p>On what basis do you earn income.</p>
                 <PercentForm userId={user.id.toString()} />
              </div>
          </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { revalidate } from "./actions";
 
 export function CapitalForm({userId}:{userId:string}){
     const [capital, setCapital] = useState(0)
@@ -13,10 +14,11 @@ export function CapitalForm({userId}:{userId:string}){
       if(json.error){
         return;
       }
+      revalidate()
     }
     return (
         <>
-         <div className="flex flex-col w-full items-center pt-4 gap-2">
+         <div className="flex flex-col bg-[#EBF4F6] items-center p-4 rounded gap-2">
            <p>Avg. Capital: </p>
            <input type="number" placeholder="Amount: " className="p-2" onChange={(e)=>{
             setCapital(parseInt(e.target.value))
@@ -30,11 +32,30 @@ export function CapitalForm({userId}:{userId:string}){
 }
 
 export function PercentForm({userId}:{userId:string}){
+  const [basis, setBasis] = useState("weekly")
+  async function SaveCycle(){
+    const res = await fetch(`/api/savecycle`, {
+      method:"POST",
+      body:JSON.stringify({cycle:basis, userId})
+    })
+    const json = await res.json();
+    if(json.error){
+      return;
+    }
+    revalidate()
+  }
  return (
-  <><div className="flex flex-col gap-2 items-center">
-    <p>min(0%) max(100%)</p>
-    <input type="text" placeholder="50%" className="p-2"/>
-    <button className="bg-[#37B7C3] w-44 p-2 rounded">Save</button>
+  <><div className="flex flex-col bg-[#EBF4F6] gap-2 p-4 rounded items-center">
+    <p>Weekly or Monthly</p>
+    <select className="w-40 p-2" onChange={(e)=>{
+      setBasis(e.target.value)
+    }}>
+      <option value={"weekly"}>Weekly</option>
+      <option value={"monthly"}>Monthly</option>
+    </select>
+    <button className="bg-[#37B7C3] w-44 p-2 rounded" onClick={()=>{
+      SaveCycle()
+    }}>Save</button>
     </div></>
  )
 }
