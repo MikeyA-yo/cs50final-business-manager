@@ -12,7 +12,6 @@ export default async function Infos() {
     const db = client.db("BusinessManager");
     const invoices = db.collection("invoices");
     const businesses = db.collection("businesses");
-    const customers = db.collection("customers");
     const business = await businesses.findOne({userId: user.id.toString()});
     if(!business){
         return redirect("/register");
@@ -22,6 +21,7 @@ export default async function Infos() {
     const pending = invoices.find({userId: user.id, status:"pending"});
     const collectedArray = await collected.toArray();
     const pendingArray = await pending.toArray();
+    const capital = business.capital ?? 0;
     let amountCollected = 0;
     for (let i = 0; i < collectedArray.length; i++){
         amountCollected += collectedArray[i].amount
@@ -34,7 +34,7 @@ export default async function Infos() {
     { header: "Collected", amount:` ${amountCollected}` },
     { header: "Pending", amount: `${amountPending}` },
     { header: "Total", amount: `${amountCollected + amountPending}` },
-    { header: "Yo", amount: "b" },
+    { header: "Profit", amount:`${(amountCollected + amountPending) - capital}` },
   ];
   return (
     <>

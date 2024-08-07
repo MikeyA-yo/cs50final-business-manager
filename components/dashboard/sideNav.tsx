@@ -9,6 +9,7 @@ import Image from "next/image";
 export default function SideNav({userProps}:{userProps:{name:string, image:string}}) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const image = userProps.image.length > 2 ? userProps.image : "/Avatar.png"
   return (
     <>
       <div className="lg:flex md:flex hidden flex-col min-h-screen bg-[#071952] p-8 items-center justify-between">
@@ -16,7 +17,7 @@ export default function SideNav({userProps}:{userProps:{name:string, image:strin
           <div className={`bg-[#${pathname === "/dashboard/settings"?"EBF4F6":"37B7C3"}] rounded-lg p-2 flex flex-col gap-2`}>
             <Link href={`/dashboard/settings`} className=" flex flex-col gap-2">
             <h3 className="flex gap-1 justify-between">Settings <Gear className="size-6" /></h3>
-            <p className="flex gap-1">{userProps.name} <Image src={userProps.image} alt="Image of you" height={45} width={45} className="rounded-full" /></p>
+            <p className="flex gap-1">{userProps.name} <Image src={image} alt="Image of you" height={45} width={45} className="rounded-full" /></p>
             </Link>
           </div>
           <div className={`bg-[#${pathname === "/dashboard"?"EBF4F6":"37B7C3"}] rounded-lg p-2`}>
@@ -88,6 +89,7 @@ function MobileNav({
       },
     },
   };
+  const image = userProps.image.length > 2 ? userProps.image : "/Avatar.png";
   return (
     <AnimatePresence>
       <motion.div
@@ -105,7 +107,7 @@ function MobileNav({
           <div className={`bg-[#${pathname === "/dashboard/settings"?"EBF4F6":"37B7C3"}] ${pathname === "/dashboard/settings"?"text-black":""} rounded-lg p-2 flex flex-col gap-2`}>
             <Link href={`/dashboard/settings`} className=" flex flex-col gap-2">
             <h3 className="flex gap-1 justify-between">Settings <Gear className="size-6" /></h3>
-            <p className="flex gap-1">{userProps.name} <Image src={userProps.image} alt="Image of you" height={45} width={45} className="rounded-full" /></p>
+            <p className="flex gap-1">{userProps.name} <Image src={image} alt="Image of you" height={45} width={45} className="rounded-full" /></p>
             </Link>
           </div>
             <div className={`bg-[#${pathname === "/dashboard"?"EBF4F6":"37B7C3"}] ${pathname === "/dashboard"?"text-black":""} rounded-lg p-2`}>
