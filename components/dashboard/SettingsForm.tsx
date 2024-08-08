@@ -10,7 +10,7 @@ export function CapitalForm({ userId }: { userId: string }) {
   const [comp, setComp] = useState(false);
   const [load, setLoad] = useState(false);
   const [err, setErr] = useState(false);
-  const [localErr, setLocalErr] = useState(false)
+  const [localErr, setLocalErr] = useState(false);
   async function SaveCapital() {
     try {
       setLoad(true);
@@ -21,11 +21,10 @@ export function CapitalForm({ userId }: { userId: string }) {
       const json = await res.json();
       setLoad(false);
       if (json.error) {
-        alert(json.error)
         setErr(true);
         return;
       }
-      setComp(true)
+      setComp(true);
       revalidate();
     } catch (e) {
       setErr(true);
@@ -36,8 +35,15 @@ export function CapitalForm({ userId }: { userId: string }) {
       <div className="flex flex-col bg-[#EBF4F6] items-center p-4 rounded gap-2">
         {load && <Spinner className="animate-spin size-8" />}
         {err && <Err message="well screwed" onClick={() => setErr(false)} />}
-        {comp && <Comp message="Avg Capital updated" onClick={()=> setComp(false)} />} 
-        {localErr && <Err message="Capital can't be 0" onClick={()=> setLocalErr(false)} />}    
+        {comp && (
+          <Comp message="Avg Capital updated" onClick={() => setComp(false)} />
+        )}
+        {localErr && (
+          <Err
+            message="Capital can't be 0"
+            onClick={() => setLocalErr(false)}
+          />
+        )}
         <p>Avg. Capital: </p>
         <input
           type="number"
@@ -50,8 +56,8 @@ export function CapitalForm({ userId }: { userId: string }) {
         <button
           className="bg-[#37B7C3] w-44 p-2 rounded"
           onClick={() => {
-            if(capital <= 0){
-              setLocalErr(true)
+            if (capital <= 0) {
+              setLocalErr(true);
               return;
             }
             SaveCapital();
@@ -80,11 +86,10 @@ export function PercentForm({ userId }: { userId: string }) {
       const json = await res.json();
       setLoad(false);
       if (json.error) {
-        
         setErr(true);
         return;
       }
-      setComp(true)
+      setComp(true);
       revalidate();
     } catch (e) {
       setErr(true);
@@ -95,7 +100,9 @@ export function PercentForm({ userId }: { userId: string }) {
       <div className="flex flex-col bg-[#EBF4F6] gap-2 p-4 rounded items-center">
         {load && <Spinner className="animate-spin size-8" />}
         {err && <Err message="well screwed" onClick={() => setErr(false)} />}
-        {comp && <Comp message="Pay Cycle updated" onClick={()=> setComp(false)} />}  
+        {comp && (
+          <Comp message="Pay Cycle updated" onClick={() => setComp(false)} />
+        )}
         <p>Weekly or Monthly</p>
         <select
           className="w-40 p-2"
@@ -119,10 +126,46 @@ export function PercentForm({ userId }: { userId: string }) {
   );
 }
 
-export function CurrencyForm({ userId} : {userId:string}){
+export function CurrencyForm({ userId }: { userId: string }) {
+  const [currency, setCurrency] = useState("naira");
+  const [comp, setComp] = useState(false);
+  const [load, setLoad] = useState(false);
+  const [err, setErr] = useState(false);
+  async function SaveCurrency() {
+    try {
+      setLoad(true);
+      const res = await fetch(`/api/savecurrency`, {
+        method: "POST",
+        body: JSON.stringify({ currency, userId }),
+      });
+      const json = await res.json();
+      setLoad(false);
+      if (json.error) {
+        setErr(true);
+        return;
+      }
+      setComp(true);
+      revalidate();
+    } catch (e) {
+      setErr(true);
+    }
+  }
   return (
     <div className="flex flex-col bg-[#EBF4F6] gap-2 p-4 rounded items-center">
-
+      {load && <Spinner className="animate-spin size-8" />}
+        {err && <Err message="well screwed" onClick={() => setErr(false)} />}
+        {comp && (
+          <Comp message="Currency updated" onClick={() => setComp(false)} />
+        )}
+      <select className="w-40 p-2" onChange={(e)=>{
+        setCurrency(e.target.value)
+      }}>
+        <option value={"naira"}>Naira</option>
+        <option value={"dollars"}>Dollars</option>
+      </select>
+      <button className="bg-[#37B7C3] w-44 p-2 rounded" onClick={()=>{
+        SaveCurrency();
+      }}>Save</button>
     </div>
-  )
+  );
 }
