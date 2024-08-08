@@ -5,6 +5,7 @@ import { revalidate } from "./actions";
 import { useRouter } from "next/navigation";
 import { Spinner } from "../someSvgs";
 import { Montserrat } from "next/font/google";
+import { Err } from "../utilComps";
 
 const mont = Montserrat({weight:["500"], subsets:["vietnamese"]})
 export default function EditInvoice({ id }: { id: string }) {
@@ -60,7 +61,8 @@ export default function EditInvoice({ id }: { id: string }) {
         <form className="flex flex-col gap-2 bg-[#EBF4F6] p-4 shadow-md shadow-[#37B7C3]" onSubmit={(e)=>{
             e.preventDefault();
         }}>
-            {load && <Spinner className="animate-spin size-8" />}
+          {err && <Err message={errText} onClick={()=>setErr(false)} />}
+          {load && <Spinner className="animate-spin size-8" />}
           {invoice && (
             <>
               <label htmlFor="amount">Edit Amount, current amount: {invoice.amount}</label>
