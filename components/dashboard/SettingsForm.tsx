@@ -118,3 +118,11 @@ export function PercentForm({ userId }: { userId: string }) {
     </>
   );
 }
+
+export function CurrencyForm({ userId} : {userId:string}){
+  return (
+    <div className="flex flex-col bg-[#EBF4F6] gap-2 p-4 rounded items-center">
+
+    </div>
+  )
+}
