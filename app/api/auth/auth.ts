@@ -6,10 +6,14 @@ import { Google } from "arctic";
 import { cookies } from "next/headers";
 import { cache } from "react";
 
+let callbackUrl = "http://localhost:3000/api/auth/callback";
+if (process.env.NODE_ENV === "production" ){
+  callbackUrl = "https://businessmanager-khaki.vercel.app/api/auth/callback"
+}
 export const google = new Google(
   process.env.GOOGLE_CLIENTID as string,
   process.env.GOOGLE_CLIENTSECRET as string,
-  "https://businessmanager-khaki.vercel.app/api/auth/callback"
+ callbackUrl
 );
 async function connect() {
   await clientPromise;

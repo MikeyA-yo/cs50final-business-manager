@@ -141,7 +141,8 @@ export function DeleteInvoice({id}:{id:string}){
   const [load, setLoad] = useState(false)
   async function deleteInvoice(){
     setLoad(true)
-    const res = await fetch(`http://localhost:3000/api/deleteinvoice?id=${id}`);
+    const url = process.env.NODE_ENV === "production" ? "https://businessmanager-khaki.vercel.app/" : "http://localhost:3000/";
+    const res = await fetch(`${url}api/deleteinvoice?id=${id}`);
     const json = await res.json();
      if(json.error){
       alert(json.error)
