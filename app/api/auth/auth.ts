@@ -9,7 +9,7 @@ import { cache } from "react";
 export const google = new Google(
   process.env.GOOGLE_CLIENTID as string,
   process.env.GOOGLE_CLIENTSECRET as string,
-  "http://localhost:3000/api/auth/callback"
+  "https://businessmanager-khaki.vercel.app/api/auth/callback"
 );
 async function connect() {
   await clientPromise;
