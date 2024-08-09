@@ -77,7 +77,7 @@ function Xbar({
   );
 }
 
-function MenuList({user}:{user?:User | null | userPreview}) {
+function MenuList({user}:{user?:{name:string, email:string} | null }) {
   return (
     <>
       <AnimatePresence>
@@ -111,7 +111,7 @@ function MenuList({user}:{user?:User | null | userPreview}) {
   );
 }
 export type userPreview = Omit<User, "_id" | "id">
-export default function Nav({user}:{user?:User | null | userPreview}) {
+export default function Nav({user}:{user?:{name:string, email:string} | null }) {
   const [open, setOpen] = useState<boolean>(false);
   const pathname = usePathname();
   let hidden = "flex";
