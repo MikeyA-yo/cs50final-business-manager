@@ -48,7 +48,7 @@ export default function Chart({ dataSet }: { dataSet: ChartLike }) {
         height={"100%"}
         width={"100%"}
         minHeight={230}
-        minWidth={150}
+        minWidth={250}
       >
         <BarChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
