@@ -35,16 +35,13 @@ export type ChartLike = MoneyData[];
 
 export interface MoneyData {
   name: string;
-  in: number;
-  out: number;
+  amount:number
 }
-export default function Chart({ dataSet }: { dataSet?: ChartLike }) {
+export default function Chart({ dataSet }: { dataSet: ChartLike }) {
     let chartData:ChartLike;
-  if (!dataSet) {
-    chartData = data
-  }else{
+  
     chartData = dataSet
-  }
+  
   return (
     <>
       <ResponsiveContainer
@@ -59,8 +56,8 @@ export default function Chart({ dataSet }: { dataSet?: ChartLike }) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="out" fill="#088395" />
-          <Bar dataKey="in" fill="#37B7C3" />
+          {/* <Bar dataKey="out" fill="#088395" /> */}
+          <Bar dataKey="amount" fill="#37B7C3" />
         </BarChart>
       </ResponsiveContainer>
     </>

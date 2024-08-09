@@ -27,6 +27,7 @@ export default function CreateCustomer({ userID }: { userID: string }) {
       return;
     }
     setForm(false);
+    setErr(false)
     if(res.ok && !msg.error){
       revalidate()
       setComp(true)

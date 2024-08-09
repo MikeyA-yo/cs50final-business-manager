@@ -39,6 +39,7 @@ export default function CreateInvoice({
       }
       revalidate();
       setForm(false);
+      setErr(false)
       setComp(true);
     } catch (e) {
         setErr(true)
