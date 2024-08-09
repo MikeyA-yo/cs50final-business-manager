@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { DashBar, Gear, Invoice, Signout, UserPlus, Wallet, XMark } from "../someSvgs";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -15,25 +14,25 @@ export default function SideNav({userProps}:{userProps:{name:string, image:strin
       <div className="lg:flex md:flex hidden flex-col min-h-screen bg-[#071952] p-8 items-center justify-between">
         <div className="nav-dash flex gap-6 flex-col ">
           <div className={`bg-[#${pathname === "/dashboard/settings"?"EBF4F6":"37B7C3"}] rounded-lg p-2 flex flex-col gap-2`}>
-            <Link href={`/dashboard/settings`} className=" flex flex-col gap-2">
+            <a href={`/dashboard/settings`} className=" flex flex-col gap-2">
             <h3 className="flex gap-1 justify-between">Settings <Gear className="size-6" /></h3>
             <p className="flex gap-1">{userProps.name} <Image src={image} alt="Image of you" height={45} width={45} className="rounded-full" /></p>
-            </Link>
+            </a>
           </div>
           <div className={`bg-[#${pathname === "/dashboard"?"EBF4F6":"37B7C3"}] rounded-lg p-2`}>
-              <Link href={`/dashboard`} className="flex gap-2 items-center justify-center">
+              <a href={`/dashboard`} className="flex gap-2 items-center justify-center">
                Dashboard <Wallet className="size-6" />
-              </Link>
+              </a>
             </div>
           <div className={`bg-[#${pathname === "/dashboard/invoices"?"EBF4F6":"37B7C3"}] rounded-lg p-2`}>
-            <Link href={`/dashboard/invoices`} className="flex gap-2 items-center justify-center">
+            <a href={`/dashboard/invoices`} className="flex gap-2 items-center justify-center">
               Invoices <Invoice className="size-6" />
-            </Link>
+            </a>
           </div>
           <div className={`bg-[#${pathname === "/dashboard/customers"?"EBF4F6":"37B7C3"}] rounded-lg p-2`}>
-            <Link href={`/dashboard/customers`} className="flex gap-2 items-center justify-center">
+            <a href={`/dashboard/customers`} className="flex gap-2 items-center justify-center">
               Customers <UserPlus className="size-6" />
-            </Link>
+            </a>
           </div>
         </div>
         <div className="bg-[#37B7C3] rounded-lg p-2">
@@ -105,32 +104,32 @@ function MobileNav({
           </div>
           <div className="flex flex-col pt-1 gap-6">
           <div className={`bg-[#${pathname === "/dashboard/settings"?"EBF4F6":"37B7C3"}] ${pathname === "/dashboard/settings"?"text-black":""} rounded-lg p-2 flex flex-col gap-2`}>
-            <Link href={`/dashboard/settings`} className=" flex flex-col gap-2">
+            <a href={`/dashboard/settings`} className=" flex flex-col gap-2">
             <h3 className="flex gap-1 justify-between">Settings <Gear className="size-6" /></h3>
             <p className="flex gap-1">{userProps.name} <Image src={image} alt="Image of you" height={45} width={45} className="rounded-full" /></p>
-            </Link>
+            </a>
           </div>
             <div className={`bg-[#${pathname === "/dashboard"?"EBF4F6":"37B7C3"}] ${pathname === "/dashboard"?"text-black":""} rounded-lg p-2`}>
-              <Link href={`/dashboard`} className="flex gap-2 items-center justify-center">
+              <a href={`/dashboard`} className="flex gap-2 items-center justify-center">
                Dashboard <Wallet className="size-6 text-black" />
-              </Link>
+              </a>
             </div>
             <div className={`bg-[#${pathname === "/dashboard/invoices"?"EBF4F6":"37B7C3"}] ${pathname === "/dashboard/invoices"?"text-black":""} rounded-lg p-2`}>
-              <Link href={`/dashboard/invoices`} className="flex gap-2 items-center justify-center">
+              <a href={`/dashboard/invoices`} className="flex gap-2 items-center justify-center">
                 Invoices <Invoice className="size-6" />
-              </Link>
+              </a>
             </div>
             <div className={`bg-[#${pathname === "/dashboard/customers"?"EBF4F6":"37B7C3"}] ${pathname === "/dashboard/customers"?"text-black":""} rounded-lg p-2`}>
-              <Link href={`/dashboard/customers`} className="flex gap-2 items-center justify-center">
+              <a href={`/dashboard/customers`} className="flex gap-2 items-center justify-center">
                 Customers <UserPlus className="size-6" />
-              </Link>
+              </a>
             </div>
           </div>
         </div>
         <div className="bg-[#37B7C3] rounded-lg p-2">
-          <Link href={`/api/auth/signout`} className="flex gap-2">
+          <a href={`/api/auth/signout`} className="flex gap-2">
             Sign Out <Signout className="size-6" />
-          </Link>
+          </a>
         </div>
       </motion.div>
     </AnimatePresence>
