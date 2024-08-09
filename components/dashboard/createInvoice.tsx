@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Delete, Invoice } from "../someSvgs";
+import { Delete, Invoice, Spinner } from "../someSvgs";
 import { InvoiceData } from "@/app/api/createinvoice/route";
 import { Comp, Err } from "../utilComps";
 import { revalidate } from "./actions";
@@ -138,20 +138,24 @@ export default function CreateInvoice({
 }
 //ptoentially good input class: bg-inherit outline-none border-b border-b-[#EBF4F6]
 export function DeleteInvoice({id}:{id:string}){
+  const [load, setLoad] = useState(false)
   async function deleteInvoice(){
+    setLoad(true)
     const res = await fetch(`http://localhost:3000/api/deleteinvoice?id=${id}`);
     const json = await res.json();
      if(json.error){
       alert(json.error)
       return
      }
+     setLoad(false)
     revalidate()
   }
   return (
-    <div className="cursor-pointer" onClick={()=>{
+    <div className="cursor-pointer flex gap-1" onClick={()=>{
       deleteInvoice()
     }}>
       <Delete className="size-8 p-1 border-2 rounded" />
+      {load && <Spinner className="animate-spin size-8" />}
     </div>
   )
 }

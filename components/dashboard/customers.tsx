@@ -17,10 +17,10 @@ export default async function Customers() {
   const uniqueCustomers = customers.find({ userId: user.id });
   const invoices = db.collection("invoices");
   const customersArray = await uniqueCustomers.toArray();
-  const businesses = db.collection("businesses")
-  const buisness = await businesses.findOne({userId:user.id.toString()});
-  if(!buisness){
-    return redirect("/register")
+  const businesses = db.collection("businesses");
+  const buisness = await businesses.findOne({ userId: user.id.toString() });
+  if (!buisness) {
+    return redirect("/register");
   }
   const sign = buisness.currency === "naira" ? "₦" : "$";
   return (
@@ -33,7 +33,7 @@ export default async function Customers() {
         </div>
         <CreateCustomer userID={user.id.toString()} />
         <div className="flex flex-col gap-2 md:p-4 items-center">
-          <table className="lg:block md:block hidden">
+          <table className={`lg:block md:block hidden ${rob.className}`}>
             <tbody>
               {customersArray.length > 0 && (
                 <tr>
@@ -59,13 +59,25 @@ export default async function Customers() {
                 })}
             </tbody>
           </table>
-          <div className="lg:hidden md:hidden bg-[#088395] rounded flex flex-col justify-evenly gap-2 p-2">
-             {customersArray.map((customer, i)=>{
-              return (
-                <CustomerCards name={customer.name ?? ""} email={customer.email ?? ""} key={i} id={user.id} invoices={invoices} customers={customers} sign={sign} />
-              )
-             })}
-          </div>
+          {customersArray.length > 0 && (
+            <div
+              className={`lg:hidden md:hidden bg-[#088395] rounded flex flex-col justify-evenly gap-2 p-2 ${rob.className}`}
+            >
+              {customersArray.map((customer, i) => {
+                return (
+                  <CustomerCards
+                    name={customer.name ?? ""}
+                    email={customer.email ?? ""}
+                    key={i}
+                    id={user.id}
+                    invoices={invoices}
+                    customers={customers}
+                    sign={sign}
+                  />
+                );
+              })}
+            </div>
+          )}
           {customersArray.length === 0 && (
             <h3>No Customers yet, create one to see them appear</h3>
           )}
@@ -75,22 +87,38 @@ export default async function Customers() {
   );
 }
 
-async function CustomerTable({ name, email, id, invoices, customers }: { name: string; email: string, id:ObjectId, invoices:Collection<any>, customers:Collection<any>  }) {
+async function CustomerTable({
+  name,
+  email,
+  id,
+  invoices,
+  customers,
+}: {
+  name: string;
+  email: string;
+  id: ObjectId;
+  invoices: Collection<any>;
+  customers: Collection<any>;
+}) {
   let invoiceNumbers = 0;
-  const customer = await customers.findOne({userId: id, name:name, email:email})
-  const uniqueInvoices = invoices?.find({customerId:customer?._id});
+  const customer = await customers.findOne({
+    userId: id,
+    name: name,
+    email: email,
+  });
+  const uniqueInvoices = invoices?.find({ customerId: customer?._id });
   const invoiceArray = await uniqueInvoices?.toArray();
-  if(uniqueInvoices){
-    invoiceNumbers = invoiceArray?.length ?? 0
+  if (uniqueInvoices) {
+    invoiceNumbers = invoiceArray?.length ?? 0;
   }
   let totalPending = 0;
   let totalPaid = 0;
-  for (let i = 0; i < invoiceArray.length; i++){
-     if (invoiceArray[i].status === "pending"){
+  for (let i = 0; i < invoiceArray.length; i++) {
+    if (invoiceArray[i].status === "pending") {
       totalPending += invoiceArray[i].amount;
-     }else{
+    } else {
       totalPaid += invoiceArray[i].amount;
-     }
+    }
   }
   return (
     <tr className="even:bg-[#37B7C3]">
@@ -99,47 +127,74 @@ async function CustomerTable({ name, email, id, invoices, customers }: { name: s
       <td className="tableData">{invoiceNumbers}</td>
       <td className="tableData">{totalPending}</td>
       <td className="tableData">{totalPaid}</td>
-      <td className="tableData"><DeleteCustomer  id={customer?._id.toString()}/></td>
+      <td className="tableData">
+        <DeleteCustomer id={customer?._id.toString()} />
+      </td>
     </tr>
   );
 }
 
-async function CustomerCards({ name, email, id, invoices, customers, sign }: { name: string; email: string, id:ObjectId, invoices:Collection<any>, customers:Collection<any>, sign?:string}){
+async function CustomerCards({
+  name,
+  email,
+  id,
+  invoices,
+  customers,
+  sign,
+}: {
+  name: string;
+  email: string;
+  id: ObjectId;
+  invoices: Collection<any>;
+  customers: Collection<any>;
+  sign?: string;
+}) {
   let invoiceNumbers = 0;
-  const customer = await customers?.findOne({userId: id, name:name, email:email})
-  const uniqueInvoices = invoices?.find({customerId:customer?._id});
+  const customer = await customers?.findOne({
+    userId: id,
+    name: name,
+    email: email,
+  });
+  const uniqueInvoices = invoices?.find({ customerId: customer?._id });
   const invoiceArray = await uniqueInvoices?.toArray();
-  if(uniqueInvoices){
-    invoiceNumbers = invoiceArray?.length ?? 0
+  if (uniqueInvoices) {
+    invoiceNumbers = invoiceArray?.length ?? 0;
   }
   let totalPending = 0;
   let totalPaid = 0;
-  for (let i = 0; i < invoiceArray.length; i++){
-     if (invoiceArray[i].status === "pending"){
+  for (let i = 0; i < invoiceArray.length; i++) {
+    if (invoiceArray[i].status === "pending") {
       totalPending += invoiceArray[i].amount;
-     }else{
+    } else {
       totalPaid += invoiceArray[i].amount;
-     }
+    }
   }
   return (
     <div className="flex flex-col justify-evenly w-auto bg-[#37B7C3] rounded p-2 gap-2">
-       <div className="border-b flex flex-col gap-1 p-2 border-gray-300">
+      <div className="border-b flex flex-col gap-1 p-2 border-gray-300">
         <p>{name}</p>
         <p>{email}</p>
-       </div>
-       <div className="flex items-center justify-around border-b p-2 border-gray-300">
-          <div>
-            <p>Pending</p>
-            <p>{sign}{totalPending}</p>
-          </div>
-          <div>
-            <p>Paid</p>
-            <p>{sign}{totalPaid}</p>
-          </div>
-       </div>
-       <div className="border-b p-2 flex flex-col gap-1 border-gray-300">
-           {invoiceNumbers} invoices
-       </div>
+      </div>
+      <div className="flex items-center justify-around border-b p-2 border-gray-300">
+        <div>
+          <p>Pending</p>
+          <p>
+            {sign}
+            {totalPending}
+          </p>
+        </div>
+        <div>
+          <p>Paid</p>
+          <p>
+            {sign}
+            {totalPaid}
+          </p>
+        </div>
+      </div>
+      <div className="p-2 flex justify-between gap-1">
+        {invoiceNumbers} invoices
+        <DeleteCustomer id={customer?._id.toString()} />
+      </div>
     </div>
-  )
+  );
 }

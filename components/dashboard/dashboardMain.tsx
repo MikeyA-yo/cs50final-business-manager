@@ -7,31 +7,8 @@ import Infos from "./dashInfo";
 import {
   isWithinAMonth,
   isWithinAWeek,
-  stringDateToYearDays,
 } from "@/app/api/auth/login/email/functions";
 const mont = Montserrat({ weight: ["500"], subsets: ["vietnamese"] });
-const defaultIncome = [
-  {
-    name: "A",
-    in: 8000,
-    out: 3500,
-  },
-  {
-    name: "B",
-    in: 7500,
-    out: 4500,
-  },
-  {
-    name: "C",
-    in: 6000,
-    out: 6500,
-  },
-  {
-    name: "D",
-    in: 8000,
-    out: 3500,
-  },
-];
 export default async function Dashboard() {
   const { user } = await auth();
   if (!user) {
@@ -45,11 +22,17 @@ export default async function Dashboard() {
   const invoiceArray = await invoicesUnique.toArray();
   const base = invoiceArray.slice(-1)[0];
   const business = await businesses.findOne({ userId: user.id.toString() });
+  if (!business) {
+    return redirect("/register");
+  }
   let data: ChartLike;
+  let profitData:ChartLike;
   if (invoiceArray.length !== 0) {
     data = genData(invoiceArray, base.createDate);
+    profitData = genProfitData(invoiceArray, base.createDate, Math.round(business?.capital / 7 ?? 0))
     if (business?.cycle && business.cycle === "monthly") {
       data = genDataMonth(invoiceArray, base.createDate);
+      profitData = genProfitDataMonth(invoiceArray, base.createDate, business?.capital ?? 0)
     }
   } else {
     let names = business?.cycle
@@ -78,10 +61,7 @@ export default async function Dashboard() {
       };
       data.push(content);
     });
-  }
-
-  if (!business) {
-    return redirect("/register");
+    profitData = data
   }
   return (
     <>
@@ -96,16 +76,16 @@ export default async function Dashboard() {
         </div>
         <div className="flex lg:flex-row lg:justify-around flex-col items-center gap-2 justify-center w-full">
           <div className="flex flex-col">
-            <h2 className="text-xl">Revenue</h2>
+            <h2 className="text-xl">Latest Revenue</h2>
             <div className="lg:w-96 md:w-80 p-4 flex lg:flex-row flex-wrap flex-col w-full rounded border-[#071952] border">
               <Chart dataSet={data} />
             </div>
           </div>
           <div className="flex flex-col">
-            <h2 className="text-xl">Profits</h2>
+            <h2 className="text-xl">Latest Profits</h2>
             <div className="lg:w-96 md:w-80 p-4 flex lg:flex-row flex-wrap flex-col w-full rounded border-[#071952] border">
               {" "}
-              <Chart dataSet={data} />
+              <Chart dataSet={profitData} />
             </div>
           </div>
         </div>
@@ -135,6 +115,33 @@ function genData(invoiceArray: any[], base: string) {
     data.forEach((thing) => {
       if (thing.name === dayName) {
         thing.amount += filtered[i].amount;
+      }
+    });
+  }
+  return data;
+}
+
+function genProfitData(invoiceArray: any[], base: string, capital:number){
+  let filtered = [];
+  for (let i = 0; i < invoiceArray.length; i++) {
+    if (isWithinAWeek(base, invoiceArray[i].createDate)) {
+      filtered.push(invoiceArray[i]);
+    }
+  }
+  let names = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  let data: { name: string; amount: number }[] = [];
+  names.forEach((name) => {
+    const content = {
+      name,
+      amount: 0,
+    };
+    data.push(content);
+  });
+  for (let i = 0; i < filtered.length; i++) {
+    let dayName = filtered[i].createDate.split(" ")[0];
+    data.forEach((thing) => {
+      if (thing.name === dayName) {
+        thing.amount += filtered[i].amount - capital;
       }
     });
   }
@@ -175,6 +182,46 @@ function genDataMonth(invoiceArray: any[], base: string) {
     data.forEach((thing) => {
       if (thing.name === dayName) {
         thing.amount += filtered[i].amount;
+      }
+    });
+  }
+  return data;
+}
+
+function genProfitDataMonth(invoiceArray: any[], base: string, capital:number){
+  let filtered = [];
+  for (let i = 0; i < invoiceArray.length; i++) {
+    if (isWithinAMonth(base, invoiceArray[i].createDate)) {
+      filtered.push(invoiceArray[i]);
+    }
+  }
+  let names = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let data: { name: string; amount: number }[] = [];
+  names.forEach((name) => {
+    const content = {
+      name,
+      amount: 0,
+    };
+    data.push(content);
+  });
+  for (let i = 0; i < filtered.length; i++) {
+    let dayName = filtered[i].createDate.split(" ")[1];
+    data.forEach((thing) => {
+      if (thing.name === dayName) {
+        thing.amount += filtered[i].amount - capital;
       }
     });
   }

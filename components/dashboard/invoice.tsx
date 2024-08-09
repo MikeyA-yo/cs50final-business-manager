@@ -4,8 +4,7 @@ import { redirect } from "next/navigation";
 import CreateInvoice, { DeleteInvoice } from "./createInvoice";
 import { clientPromise } from "@/app/api/mongodb";
 import { InvoiceData } from "@/app/api/createinvoice/route";
-import { Clock, Delete, Edit, Tick } from "../someSvgs";
-import { Collection } from "mongodb";
+import { Clock, Edit, Tick } from "../someSvgs";
 import Link from "next/link";
 
 const ubuntu = Ubuntu({ weight: ["500"], subsets: ["latin-ext"] });
@@ -62,13 +61,17 @@ export default async function Invoices() {
                 })}
             </tbody>
           </table>
-          {j.length === 0 && <h3>No Invoices here, create one to see them appear</h3>}
-          <div className="lg:hidden md:hidden flex flex-col justify-center bg-[#088395] gap-2 p-2 rounded">
-            {j.length > 0 &&
-              j.toReversed().map((data, i) => {
-                return <InvoiceCard data={data} key={i} sign={sign} />;
-              })}
-          </div>
+          {j.length === 0 && (
+            <h3>No Invoices here, create one to see them appear</h3>
+          )}
+          {j.length > 0 && (
+            <div className="lg:hidden md:hidden flex flex-col justify-center bg-[#088395] gap-2 p-2 rounded">
+              {j.length > 0 &&
+                j.toReversed().map((data, i) => {
+                  return <InvoiceCard data={data} key={i} sign={sign} />;
+                })}
+            </div>
+          )}
         </div>
       </div>
     </>
@@ -91,7 +94,9 @@ async function InvoiceTable({ data }: { data: InvoiceData }) {
         )}
       </td>
       <td className="items-center justify-center py-2 px-4  flex gap-1">
-        <Link href={`/dashboard/invoices/${data.id}/edit`}><Edit className="size-8 p-1 border-2 rounded" /></Link>
+        <Link href={`/dashboard/invoices/${data.id}/edit`}>
+          <Edit className="size-8 p-1 border-2 rounded" />
+        </Link>
         <DeleteInvoice id={data.id} />
       </td>
     </tr>
@@ -129,11 +134,13 @@ async function InvoiceCard({
     </div>
   );
 }
-{/* <Link
+{
+  /* <Link
           href={{
             pathname: "/api/deleteinvoice",
             query: { id: data.id },
           }}
         >
           <Delete className="size-8 p-1 border-2 rounded" />
-        </Link> */}
+        </Link> */
+}
