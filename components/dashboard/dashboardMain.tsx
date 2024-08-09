@@ -5,6 +5,7 @@ import { clientPromise } from "@/app/api/mongodb";
 import { Montserrat } from "next/font/google";
 import Infos from "./dashInfo";
 import {
+  isWithinAMonth,
   isWithinAWeek,
   stringDateToYearDays,
 } from "@/app/api/auth/login/email/functions";
@@ -47,8 +48,28 @@ export default async function Dashboard() {
   let data: ChartLike;
   if (invoiceArray.length !== 0) {
     data = genData(invoiceArray, base.createDate);
+    if (business?.cycle && business.cycle === "monthly") {
+      data = genDataMonth(invoiceArray, base.createDate);
+    }
   } else {
-    let names = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    let names = business?.cycle
+      ? business.cycle === "monthly"
+        ? [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ]
+        : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+      : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     data = [];
     names.forEach((name) => {
       const content = {
@@ -111,6 +132,46 @@ function genData(invoiceArray: any[], base: string) {
   });
   for (let i = 0; i < filtered.length; i++) {
     let dayName = filtered[i].createDate.split(" ")[0];
+    data.forEach((thing) => {
+      if (thing.name === dayName) {
+        thing.amount += filtered[i].amount;
+      }
+    });
+  }
+  return data;
+}
+
+function genDataMonth(invoiceArray: any[], base: string) {
+  let filtered = [];
+  for (let i = 0; i < invoiceArray.length; i++) {
+    if (isWithinAMonth(base, invoiceArray[i].createDate)) {
+      filtered.push(invoiceArray[i]);
+    }
+  }
+  let names = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let data: { name: string; amount: number }[] = [];
+  names.forEach((name) => {
+    const content = {
+      name,
+      amount: 0,
+    };
+    data.push(content);
+  });
+  for (let i = 0; i < filtered.length; i++) {
+    let dayName = filtered[i].createDate.split(" ")[1];
     data.forEach((thing) => {
       if (thing.name === dayName) {
         thing.amount += filtered[i].amount;
