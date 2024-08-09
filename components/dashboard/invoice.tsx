@@ -29,7 +29,8 @@ export default async function Invoices() {
     })
   );
   const ID = user.id.toString();
-  const res = await fetch(`http://localhost:3000/api/createinvoice?id=${ID}`);
+  const url = process.env.NODE_ENV === "production" ? "https://businessmanager-khaki.vercel.app/" : "http://localhost:3000/";
+  const res = await fetch(`${url}api/createinvoice?id=${ID}`);
   const j: InvoiceData[] = await res.json();
   const sign = buisness.currency === "naira" ? "₦" : "$";
   return (
@@ -131,14 +132,4 @@ async function InvoiceCard({
       </div>
     </div>
   );
-}
-{
-  /* <a
-          href={{
-            pathname: "/api/deleteinvoice",
-            query: { id: data.id },
-          }}
-        >
-          <Delete className="size-8 p-1 border-2 rounded" />
-        </a> */
 }
