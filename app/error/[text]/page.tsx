@@ -1,6 +1,6 @@
 import { Montserrat } from "next/font/google"
-import Link from "next/link"
 import { Metadata } from "next";
+import Back from "./back";
 
 export const metadata: Metadata = {
     title:"Error"
@@ -11,7 +11,7 @@ export default function Page({params}:{params:{text:string}}){
     return (
         <>
          <div className={`flex flex-col items-center h-screen justify-center ${mont.className}`}>
-            <p className="self-start lg:px-32 text-2xl cursor-pointer px-10"><Link href={`/login`}>&lt; Go Back</Link></p>
+            <p className="self-start lg:px-32 text-2xl cursor-pointer px-10"><Back /></p>
             <h1 className="lg:text-5xl md:text-4xl text-3xl text-center text-red-400">{error}</h1>
          </div>
         </>
