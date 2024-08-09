@@ -5,7 +5,6 @@ import CreateInvoice, { DeleteInvoice } from "./createInvoice";
 import { clientPromise } from "@/app/api/mongodb";
 import { InvoiceData } from "@/app/api/createinvoice/route";
 import { Clock, Edit, Tick } from "../someSvgs";
-import Link from "next/link";
 
 const ubuntu = Ubuntu({ weight: ["500"], subsets: ["latin-ext"] });
 export default async function Invoices() {
@@ -17,7 +16,6 @@ export default async function Invoices() {
   const db = client.db("BusinessManager");
   const customerCol = db.collection("customers");
   const businesses = db.collection("businesses");
-  const invoices = db.collection("invoices");
   const buisness = await businesses.findOne({ userId: user.id.toString() });
   if (!buisness) {
     return redirect("/register");
@@ -94,9 +92,9 @@ async function InvoiceTable({ data }: { data: InvoiceData }) {
         )}
       </td>
       <td className="items-center justify-center py-2 px-4  flex gap-1">
-        <Link href={`/dashboard/invoices/${data.id}/edit`}>
+        <a href={`/dashboard/invoices/${data.id}/edit`}>
           <Edit className="size-8 p-1 border-2 rounded" />
-        </Link>
+        </a>
         <DeleteInvoice id={data.id} />
       </td>
     </tr>
@@ -135,12 +133,12 @@ async function InvoiceCard({
   );
 }
 {
-  /* <Link
+  /* <a
           href={{
             pathname: "/api/deleteinvoice",
             query: { id: data.id },
           }}
         >
           <Delete className="size-8 p-1 border-2 rounded" />
-        </Link> */
+        </a> */
 }
