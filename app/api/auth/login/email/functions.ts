@@ -1,3 +1,7 @@
+import { cookies } from "next/headers";
+import { auth, lucia } from "../../auth";
+import { redirect } from "next/navigation";
+
 export function isValidEmail(email: string): boolean {
 	return /.+@.+/.test(email);
 }
@@ -83,4 +87,17 @@ export function isWithinAMonth(base:string, target:string){
     const baseDays = stringDateToYearDays(base);
     const targetDays = stringDateToYearDays(target);
     return baseDays - targetDays < 31
+}
+
+export async function signOut(){
+    const cookie = cookies();
+    const {session} = await auth()
+    if(!session){
+        return redirect("/login")
+    }
+    await lucia.invalidateSession(session.id);
+
+	const sessionCookie = lucia.createBlankSessionCookie();
+	cookie.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    return redirect("/")
 }

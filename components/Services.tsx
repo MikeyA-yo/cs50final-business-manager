@@ -47,7 +47,7 @@ export default function Services() {
             </h3>
             <p>
               Stay updated with real-time financial data by entering your
-              expenses and revenues. Monitor your business's financial health
+              expenses and revenues. Monitor your business&apos;s financial health
               with up-to-the-minute tracking of profits and losses, ensuring you
               have a clear view of your financial status at all times
             </p>
@@ -70,7 +70,6 @@ export default function Services() {
           </div>
         </div>
         <div>
-          <div></div>
         </div>
       </div>
     </>
