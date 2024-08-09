@@ -40,6 +40,7 @@ export async function callback(req: Request) {
     );
     const user: User = await response.json();
     const userId = await users.findOne({ email: user.email });
+    console.log(userId)
     if (userId) {
       const session = await lucia.createSession(userId._id, {});
       const sesssionCookie = lucia.createSessionCookie(session.id);
