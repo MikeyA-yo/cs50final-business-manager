@@ -37,9 +37,9 @@ export default function SideNav({userProps}:{userProps:{name:string, image:strin
           </div>
         </div>
         <div className="bg-[#37B7C3] rounded-lg p-2">
-          <Link href={`/api/auth/signout`} className="flex gap-2">
+          <a href={`/api/auth/signout`} className="flex gap-2">
             Sign Out <Signout className="size-6" />
-          </Link>
+          </a>
         </div>
       </div>
       <div className="lg:hidden md:hidden flex fixed z-10 text-[#EBF4F6]">
