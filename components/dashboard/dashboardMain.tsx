@@ -74,8 +74,8 @@ export default async function Dashboard() {
             {business?.name ?? "Your Business Name"} Analytics
           </h2>
         </div>
-        <div className="flex lg:flex-row lg:justify-around lg:p-4 md:p-3 p-1 flex-col items-center gap-2 justify-center w-full">
-          <div className="flex flex-col w-full">
+        <div className="flex lg:flex-row lg:justify-around lg:p-4 md:p-3 p-2 flex-col items-center gap-2 justify-center w-full">
+          <div className="flex flex-col w-4/5">
             <h2 className="text-xl">Latest Revenue</h2>
             <div className="lg:w-96 md:w-80 lg:p-4 md:p-3  flex lg:flex-row flex-wrap flex-col w-full rounded border-[#071952] border">
               <Chart dataSet={data} />
