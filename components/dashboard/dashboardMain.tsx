@@ -66,7 +66,7 @@ export default async function Dashboard() {
   return (
     <>
       <div
-        className={`min-h-screen flex flex-col items-center gap-2 justify-center bg-[#EBF4F6] w-full ${mont.className}`}
+        className={`min-h-screen flex flex-col items-center gap-2 justify-center bg-[#EBF4F6] pb-2 w-full ${mont.className}`}
       >
         <Infos />
         <div>
