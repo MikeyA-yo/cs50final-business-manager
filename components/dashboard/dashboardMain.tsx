@@ -81,7 +81,7 @@ export default async function Dashboard() {
               <Chart dataSet={data} />
             </div>
           </div>
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-4/5">
             <h2 className="text-xl">Latest Profits</h2>
             <div className="lg:w-96 md:w-80 lg:p-4 md:p-3 flex lg:flex-row flex-wrap flex-col w-full rounded border-[#071952] border">
               {" "}
