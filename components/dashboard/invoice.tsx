@@ -5,6 +5,7 @@ import CreateInvoice, { DeleteInvoice } from "./createInvoice";
 import { clientPromise } from "@/app/api/mongodb";
 import { InvoiceData } from "@/app/api/createinvoice/route";
 import { Clock, Edit, Tick } from "../someSvgs";
+import Link from "next/link";
 
 const ubuntu = Ubuntu({ weight: ["500"], subsets: ["latin-ext"] });
 export default async function Invoices() {
@@ -126,7 +127,7 @@ async function InvoiceCard({
           <p>{data.createDate}</p>
         </div>
         <div className="flex gap-1">
-          <Edit className="size-8 p-1 border-2 rounded" />
+          <Link href={`/dashboard/invoices/${data.id}/edit`} ><Edit className="size-8 p-1 border-2 rounded" /></Link>
           <DeleteInvoice id={data.id} />
         </div>
       </div>
