@@ -12,6 +12,8 @@ export async function POST(req:NextRequest){
   const client = await clientPromise;
   const db = client.db("BusinessManager");
   const customers = db.collection("customers");
+  const invoices = db.collection("invoices");
   await customers.deleteOne({_id: new ObjectId(id as string)});
+  await invoices.deleteMany({customerId: new ObjectId(id as string)})
   return NextResponse.json({});
 }
