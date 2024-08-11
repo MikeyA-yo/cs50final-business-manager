@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
                 <p><strong>${token}</strong></p>
                 <p>If you did not request this, please ignore this email.</p>
                 <p>This token expires in 10 minutes time.</p>
-                <a href="http://localhost:3000/reset-password?token=${token}" class="button">Reset Password</a>
+                <a href="https://businessmanager-khaki.vercel.app/reset-password?token=${token}" class="button">Reset Password</a>
             </div>
             <div class="footer">
                 <p>© 2024 BusinessManager. All rights reserved.</p>
