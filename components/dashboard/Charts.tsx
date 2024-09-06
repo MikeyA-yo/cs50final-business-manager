@@ -35,12 +35,17 @@ export type ChartLike = MoneyData[];
 
 export interface MoneyData {
   name: string;
-  amount:number
+  amount:number 
 }
 export default function Chart({ dataSet }: { dataSet: ChartLike }) {
     let chartData:ChartLike;
   
-    chartData = dataSet
+    chartData = dataSet.map((data)=>{
+      return {
+        name:data.name,
+        amount:data.amount > 100000 ? Number(data.amount.toPrecision(3)) : data.amount
+      }
+    })
   
   return (
     <>
