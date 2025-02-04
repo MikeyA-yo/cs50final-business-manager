@@ -29,7 +29,7 @@ export default async function Dashboard() {
   let profitData:ChartLike;
   if (invoiceArray.length !== 0) {
     data = genData(invoiceArray, base.createDate);
-    profitData = genProfitData(invoiceArray, base.createDate, Math.round(business?.capital / 7 ?? 0))
+    profitData = genProfitData(invoiceArray, base.createDate, Math.round(business.capital/7))
     if (business?.cycle && business.cycle === "monthly") {
       data = genDataMonth(invoiceArray, base.createDate);
       profitData = genProfitDataMonth(invoiceArray, base.createDate, business?.capital ?? 0)

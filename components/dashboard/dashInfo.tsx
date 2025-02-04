@@ -34,7 +34,7 @@ export default async function Infos() {
     { header: "Collected", amount:` ${amountCollected}` },
     { header: "Pending", amount: `${amountPending}` },
     { header: "Total", amount: `${amountCollected + amountPending}` },
-    { header: "Profit", amount:`${(amountCollected + amountPending) - capital}` },
+    { header: "Profit", amount:`${(amountCollected + amountPending) - (capital*collectedArray.length)}` },
   ];
   return (
     <>
